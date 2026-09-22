@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PayNexa - Business Dashboard</title>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/rtl.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: var(--bg-tertiary);
+    }
+
+    .dashboard-layout {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: var(--bg-primary);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s;
+      z-index: 50;
+    }
+
+    .sidebar-header {
+      height: 72px;
+      padding: 0 var(--space-6);
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sidebar-nav {
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .sidebar-link {
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      color: var(--text-secondary);
+      font-weight: var(--weight-label);
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .sidebar-link:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .sidebar-link.active {
+      background: rgba(6, 182, 212, 0.1);
+      color: var(--accent-color);
+      border-right: 3px solid var(--accent-color);
+      border-radius: 4px 0 0 4px;
+    }
+
+    .sidebar-footer {
+      padding: var(--space-4);
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* Main Content */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Topbar */
+    .topbar {
+      height: 72px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 var(--space-8);
+      z-index: 40;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+    }
+
+    .mobile-logo {
+      display: none;
+    }
+
+    /* Content Area */
+    .content-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-12) var(--space-16);
+      background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    [data-theme="dark"] .content-area {
+      background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    }
+
+    .dashboard-page-title {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 2rem;
+      margin-top: 0;
+    }
+
+    .dashboard-section {
+      display: none;
+      animation: fadeInUp 0.4s ease;
+    }
+
+    .dashboard-section.active {
+      display: block;
+    }
+
+    /* Dashboard specific components */
+    .kpi-card {
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .kpi-title {
+      color: var(--text-muted);
+      font-size: var(--size-caption);
+      font-weight: var(--weight-label);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .kpi-value {
+      font-size: 2rem;
+      font-weight: var(--weight-h3);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      margin-top: var(--space-2);
+      margin-bottom: var(--space-2);
+    }
+
+    .kpi-trend {
+      font-size: var(--size-caption);
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .trend-up {
+      color: var(--success-color);
+    }
+
+    .trend-down {
+      color: var(--error-color);
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .data-table th {
+      padding: var(--space-4);
+      border-bottom: 2px solid var(--border-color);
+      color: var(--text-muted);
+      font-weight: var(--weight-label);
+      font-size: var(--size-caption);
+    }
+
+    .data-table td {
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: var(--weight-label);
+    }
+
+    .status-success {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success-color);
+    }
+
+    .status-warning {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning-color);
+    }
+
+    .status-error {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error-color);
+    }
+
+    /* File Upload Placeholder */
+    .file-upload {
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius);
+      padding: var(--space-8);
+      text-align: center;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .file-upload:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar {
+        position: absolute;
+        left: -280px;
+        height: 100%;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .sidebar.open {
+        left: 0;
+        transform: translateX(0);
+      }
+
+      .mobile-menu-btn {
+        display: flex;
+      }
+
+      .mobile-logo {
+        display: flex !important;
+      }
+
+      [dir="rtl"] .sidebar {
+        left: auto;
+        right: -280px;
+      }
+
+      [dir="rtl"] .sidebar.open {
+        right: 0;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .content-area {
+        padding: var(--space-6) var(--space-6);
+      }
+
+      .topbar {
+        padding: 0 var(--space-2);
+      }
+
+      .topbar-left {
+        gap: var(--space-1);
+      }
+
+      .topbar-right {
+        gap: var(--space-1);
+      }
+
+      .dashboard-page-title {
+        font-size: 2.25rem;
+        margin-bottom: 1.5rem;
+      }
+
+      /* Settings Mobile Layout Fixes */
+      .settings-item {
+        flex-direction: column;
+        align-items: center !important;
+        text-align: center !important;
+      }
+
+      .settings-item .feature-icon {
+        margin: 0 auto var(--space-4) auto !important;
+      }
+
+      .settings-item>div {
+        text-align: center !important;
+        justify-content: center;
+      }
+
+      .settings-item .status-badge {
+        margin-top: var(--space-4);
+      }
+
+      /* Profile Mobile Layout Fixes */
+      .profile-actions {
+        flex-direction: column;
+        gap: var(--space-4);
+        width: 100%;
+      }
+
+      .profile-actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* Convert table to stacked blocks on mobile */
+      #profile .data-table,
+      #profile .data-table tbody,
+      #profile .data-table tr,
+      #profile .data-table td {
+        display: block;
+        width: 100%;
+        text-align: center;
+      }
+
+      #profile .data-table tr {
+        margin-bottom: var(--space-4);
+        padding-bottom: var(--space-4);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      #profile .data-table tr:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      #profile .data-table td {
+        padding: 0.25rem 0;
+        border: none;
+        word-break: break-word;
+      }
+
+      #profile .card {
+        padding: var(--space-4) !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="dashboard-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header flex justify-between">
+        <a href="index.html" class="logo">
+          <i class="ph-fill ph-credit-card logo-icon"></i> PayNexa
+        </a>
+        <button class="icon-btn mobile-menu-btn" id="closeSidebar"><i class="ph ph-x"></i></button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="sidebar-link active" data-target="overview"><i class="ph ph-squares-four"></i> Overview</a>
+        <a class="sidebar-link" data-target="settlements"><i class="ph ph-arrows-left-right"></i> Settlements &
+          Payouts</a>
+        <a class="sidebar-link" data-target="statements"><i class="ph ph-file-text"></i> Statements</a>
+        <a class="sidebar-link" data-target="chargebacks"><i class="ph ph-shield-warning"></i> Chargebacks</a>
+        <a class="sidebar-link" data-target="reports"><i class="ph ph-chart-line-up"></i> Reports</a>
+        <div class="divider" style="margin: var(--space-2) 0;"></div>
+        <a class="sidebar-link" data-target="settings"><i class="ph ph-sliders"></i> Terminal & Settings</a>
+        <a class="sidebar-link" data-target="profile"><i class="ph ph-buildings"></i> Business Profile</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="index.html" class="sidebar-link text-error"><i class="ph ph-sign-out"></i> Logout</a>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn mobile-menu-btn" id="openSidebar"><i class="ph ph-list"></i></button>
+          <a href="index.html" class="logo mobile-logo" style="display: none;">
+            <i class="ph-fill ph-credit-card logo-icon"></i> PayNexa
+          </a>
+        </div>
+        <div class="topbar-right">
+          <button class="icon-btn theme-toggle" aria-label="Toggle theme">
+            <i class="ph-fill ph-moon theme-icon-dark"></i>
+            <i class="ph-fill ph-sun theme-icon-light"></i>
+          </button>
+          <button class="icon-btn rtl-toggle" aria-label="Toggle RTL">
+            <i class="ph ph-arrows-left-right"></i>
+          </button>
+          <button class="icon-btn"
+            style="background: rgba(6, 182, 212, 0.1); color: var(--accent-color); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 50%;">
+            <i class="ph ph-user"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="content-area">
+
+        <h1 id="topbarTitle" class="dashboard-page-title">Overview</h1>
+
+        <!-- ================= OVERVIEW ================= -->
+        <div id="overview" class="dashboard-section active">
+          <!-- KPI Cards -->
+          <div class="grid grid-cols-4 gap-6 mb-8">
+            <div class="card kpi-card">
+              <span class="kpi-title">Today's Volume</span>
+              <span class="kpi-value">$12,450.00</span>
+              <span class="kpi-trend trend-up"><i class="ph-bold ph-trend-up"></i> +8.4% vs yesterday</span>
+            </div>
+            <div class="card kpi-card">
+              <span class="kpi-title">Transactions</span>
+              <span class="kpi-value">342</span>
+              <span class="kpi-trend trend-up"><i class="ph-bold ph-trend-up"></i> +12% vs yesterday</span>
+            </div>
+            <div class="card kpi-card">
+              <span class="kpi-title">Approval Rate</span>
+              <span class="kpi-value">99.4%</span>
+              <span class="kpi-trend text-muted"><i class="ph-bold ph-minus"></i> No change</span>
+            </div>
+            <div class="card kpi-card">
+              <span class="kpi-title">Average Ticket</span>
+              <span class="kpi-value">$36.40</span>
+              <span class="kpi-trend trend-down"><i class="ph-bold ph-trend-down"></i> -2.1% vs yesterday</span>
+            </div>
+          </div>
+
+          <!-- Charts -->
+          <div class="card mb-8" style="padding: var(--space-6); text-align: left; align-items: stretch;">
+            <div class="flex justify-between items-center mb-6">
+              <h4 class="mb-0">Gross Volume (Last 30 Days)</h4>
+              <select class="form-control" style="width: auto; padding: 0.25rem 2rem 0.25rem 0.5rem;">
+                <option>Last 7 Days</option>
+                <option selected>Last 30 Days</option>
+                <option>Year to Date</option>
+              </select>
+            </div>
+            <div style="height: 300px; width: 100%; position: relative;">
+              <canvas id="volumeChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= SETTLEMENTS & PAYOUTS ================= -->
+        <div id="settlements" class="dashboard-section">
+
+          <div class="grid grid-cols-3 gap-6 mb-8">
+            <div class="card kpi-card bg-primary text-white"
+              style="border: none; align-items: flex-start; justify-content: center; background: var(--primary-color);">
+              <span class="kpi-title" style="color: rgba(255,255,255,0.7);">Next Deposit (Tomorrow, 8AM)</span>
+              <span class="kpi-value" style="color: #fff;">$11,890.45</span>
+            </div>
+            <div class="card kpi-card">
+              <span class="kpi-title">Total Processed (Current Batch)</span>
+              <span class="kpi-value">$12,450.00</span>
+            </div>
+            <div class="card kpi-card">
+              <span class="kpi-title">Est. Processing Fees</span>
+              <span class="kpi-value text-error">-$559.55</span>
+            </div>
+          </div>
+
+          <div class="card" style="padding: 0; align-items: stretch;">
+            <div style="padding: var(--space-6); border-bottom: 1px solid var(--border-color);">
+              <h4 class="mb-0 text-left">Recent Settlements</h4>
+            </div>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Batch ID</th>
+                    <th>Date & Time</th>
+                    <th>Gross Sales</th>
+                    <th>Fees & Adjustments</th>
+                    <th>Net Deposit</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>BAT-9021</td>
+                    <td>Oct 19, 2026 â€¢ 11:00 PM</td>
+                    <td>$14,230.50</td>
+                    <td class="text-error">-$384.20</td>
+                    <td class="font-weight-bold-inline">$13,846.30</td>
+                    <td><span class="status-badge status-success">Deposited</span></td>
+                  </tr>
+                  <tr>
+                    <td>BAT-9020</td>
+                    <td>Oct 18, 2026 â€¢ 11:00 PM</td>
+                    <td>$15,100.00</td>
+                    <td class="text-error">-$402.10</td>
+                    <td class="font-weight-bold-inline">$14,697.90</td>
+                    <td><span class="status-badge status-success">Deposited</span></td>
+                  </tr>
+                  <tr>
+                    <td>BAT-9019</td>
+                    <td>Oct 17, 2026 â€¢ 11:00 PM</td>
+                    <td>$18,450.25</td>
+                    <td class="text-error">-$495.30</td>
+                    <td class="font-weight-bold-inline">$17,954.95</td>
+                    <td><span class="status-badge status-success">Deposited</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= STATEMENTS ================= -->
+        <div id="statements" class="dashboard-section">
+          <div class="card" style="padding: 0; align-items: stretch;">
+            <div
+              style="padding: var(--space-6); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              <h4 class="mb-0 text-left">Monthly Statements</h4>
+              <div class="flex gap-2 text-muted">Year: 2026</div>
+            </div>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Month</th>
+                    <th>Total Volume</th>
+                    <th>Transactions</th>
+                    <th>Total Fees</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="font-weight-label">September 2026</td>
+                    <td>$345,670.00</td>
+                    <td>9,450</td>
+                    <td>$8,245.10</td>
+                    <td><button class="btn btn-outline" style="padding: 0.25rem 0.75rem; font-size: 0.85rem;"
+                        onclick="alert('Downloading PDF statement...')"><i class="ph ph-download-simple"></i> Download
+                        PDF</button></td>
+                  </tr>
+                  <tr>
+                    <td class="font-weight-label">August 2026</td>
+                    <td>$352,100.00</td>
+                    <td>9,620</td>
+                    <td>$8,410.25</td>
+                    <td><button class="btn btn-outline" style="padding: 0.25rem 0.75rem; font-size: 0.85rem;"><i
+                          class="ph ph-download-simple"></i> Download PDF</button></td>
+                  </tr>
+                  <tr>
+                    <td class="font-weight-label">July 2026</td>
+                    <td>$338,900.50</td>
+                    <td>9,100</td>
+                    <td>$8,015.80</td>
+                    <td><button class="btn btn-outline" style="padding: 0.25rem 0.75rem; font-size: 0.85rem;"><i
+                          class="ph ph-download-simple"></i> Download PDF</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= CHARGEBACKS ================= -->
+        <div id="chargebacks" class="dashboard-section">
+
+          <div class="grid grid-cols-4 gap-6 mb-8">
+            <div class="card kpi-card">
+              <span class="kpi-title">Open Disputes</span>
+              <span class="kpi-value text-warning">2</span>
+            </div>
+            <div class="card kpi-card">
+              <span class="kpi-title">Under Review</span>
+              <span class="kpi-value text-accent">1</span>
+            </div>
+            <div class="card kpi-card">
+              <span class="kpi-title">Resolved (Won)</span>
+              <span class="kpi-value text-success">14</span>
+            </div>
+            <div class="card kpi-card">
+              <span class="kpi-title">Lost</span>
+              <span class="kpi-value text-error">3</span>
+            </div>
+          </div>
+
+          <div class="card" style="padding: 0; align-items: stretch;">
+            <div style="padding: var(--space-6); border-bottom: 1px solid var(--border-color);">
+              <h4 class="mb-0 text-left">Active Chargebacks</h4>
+            </div>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Case ID</th>
+                    <th>Date Filed</th>
+                    <th>Reason Code</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Action Needed</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>CB-10492</td>
+                    <td>Oct 15, 2026</td>
+                    <td>Fraudulent - Card Not Present (Visa 10.4)</td>
+                    <td class="font-weight-bold-inline">$124.50</td>
+                    <td><span class="status-badge status-warning">Open</span></td>
+                    <td>
+                      <button class="btn-link" style="background: none; border: none; padding: 0;"
+                        onclick="document.getElementById('uploadModal').style.display='flex'">Upload Evidence</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>CB-10488</td>
+                    <td>Oct 12, 2026</td>
+                    <td>Product Not Received (MC 4855)</td>
+                    <td class="font-weight-bold-inline">$45.00</td>
+                    <td><span class="status-badge status-accent"
+                        style="background: rgba(6,182,212,0.1); color: var(--accent-color);">Under Review</span></td>
+                    <td><span class="text-muted font-size-caption">Awaiting Bank</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Evidence Upload Modal (Mock) -->
+          <div id="uploadModal" class="drawer-overlay"
+            style="display: none; align-items: center; justify-content: center; z-index: 1000; opacity: 1;">
+            <div class="card text-left" style="width: 100%; max-width: 500px; position: relative;">
+              <button class="icon-btn" style="position: absolute; top: var(--space-4); right: var(--space-4);"
+                onclick="document.getElementById('uploadModal').style.display='none'"><i class="ph ph-x"></i></button>
+              <h4 class="mb-4 text-left">Upload Dispute Evidence</h4>
+              <p class="text-secondary mb-4">Case: CB-10492 ($124.50). Please provide tracking numbers, signed receipts,
+                or communication logs.</p>
+
+              <div class="file-upload mb-4">
+                <i class="ph ph-upload-simple" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                <p>Click to browse or drag and drop files here<br><span class="font-size-caption">PDF, JPG, PNG up to
+                    10MB</span></p>
+              </div>
+
+              <div class="form-group mb-4">
+                <label class="form-label">Additional Notes</label>
+                <textarea class="form-control" rows="3"></textarea>
+              </div>
+
+              <div class="flex justify-end gap-4">
+                <button class="btn btn-outline"
+                  onclick="document.getElementById('uploadModal').style.display='none'">Cancel</button>
+                <button class="btn btn-primary"
+                  onclick="alert('Evidence Submitted'); document.getElementById('uploadModal').style.display='none'">Submit
+                  Evidence</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= REPORTS ================= -->
+        <div id="reports" class="dashboard-section">
+          <div class="card text-left mb-8" style="padding: var(--space-6); align-items: flex-start;">
+            <h4 class="mb-4">Generate Report</h4>
+            <div class="grid grid-cols-4 gap-4 w-full">
+              <div class="form-group mb-0">
+                <label class="form-label">Report Type</label>
+                <select class="form-control">
+                  <option>Transaction Detail</option>
+                  <option>Settlement Summary</option>
+                  <option>Fee Breakdown</option>
+                </select>
+              </div>
+              <div class="form-group mb-0">
+                <label class="form-label">Start Date</label>
+                <input type="date" class="form-control" value="2026-10-01">
+              </div>
+              <div class="form-group mb-0">
+                <label class="form-label">End Date</label>
+                <input type="date" class="form-control" value="2026-10-20">
+              </div>
+              <div class="form-group mb-0 flex items-end">
+                <button class="btn btn-primary w-full" style="width: 100%;">Generate</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="padding: 0; align-items: stretch;">
+            <div
+              style="padding: var(--space-6); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              <h4 class="mb-0 text-left">Transaction Detail (Oct 1 - Oct 20)</h4>
+              <button class="btn btn-outline" style="padding: 0.25rem 0.75rem; font-size: 0.85rem;"><i
+                  class="ph ph-download-simple"></i> Export CSV</button>
+            </div>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date & Time</th>
+                    <th>Card Type</th>
+                    <th>Last 4</th>
+                    <th>Amount</th>
+                    <th>Auth Code</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Oct 20, 2026 • 10:14 AM</td>
+                    <td><i class="ph-fill ph-credit-card text-muted"></i> Visa (Credit)</td>
+                    <td>**** 4242</td>
+                    <td class="font-weight-bold-inline">$45.00</td>
+                    <td>AUTH-991</td>
+                    <td><span class="status-badge status-success">Approved</span></td>
+                  </tr>
+                  <tr>
+                    <td>Oct 20, 2026 • 10:02 AM</td>
+                    <td><i class="ph-fill ph-credit-card text-muted"></i> Mastercard (Debit)</td>
+                    <td>**** 1123</td>
+                    <td class="font-weight-bold-inline">$12.50</td>
+                    <td>AUTH-990</td>
+                    <td><span class="status-badge status-success">Approved</span></td>
+                  </tr>
+                  <tr>
+                    <td>Oct 20, 2026 • 09:45 AM</td>
+                    <td><i class="ph-fill ph-credit-card text-muted"></i> Amex (Credit)</td>
+                    <td>**** 3004</td>
+                    <td class="font-weight-bold-inline">$150.00</td>
+                    <td>DECL-102</td>
+                    <td><span class="status-badge status-error">Declined (NSF)</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= SETTINGS ================= -->
+        <div id="settings" class="dashboard-section">
+          <div class="grid grid-cols-2 gap-8">
+            <!-- Linked Terminals -->
+            <div class="card" style="align-items: center; text-align: center; padding: var(--space-8);">
+              <h4 class="mb-6" style="text-align: center; width: 100%;">Linked Terminals</h4>
+
+              <div class="flex items-center justify-between mb-4 pb-4 w-full settings-item"
+                style="border-bottom: 1px solid var(--border-color);">
+                <div class="flex items-center gap-4 settings-item">
+                  <div class="feature-icon"
+                    style="width: 48px; height: 48px; font-size: 1.5rem; margin: 0; flex-shrink: 0;"><i
+                      class="ph ph-desktop"></i></div>
+                  <div style="text-align: left;">
+                    <h5 class="mb-1" style="font-size: 1.1rem;">Register 1 (NexaSmart Pro)</h5>
+                    <p class="font-size-caption text-muted mb-0">TID: 8849201</p>
+                  </div>
+                </div>
+                <span class="status-badge status-success">Online</span>
+              </div>
+
+              <div class="flex items-center justify-between mb-6 pb-4 w-full settings-item"
+                style="border-bottom: 1px solid var(--border-color);">
+                <div class="flex items-center gap-4 settings-item">
+                  <div class="feature-icon"
+                    style="width: 48px; height: 48px; font-size: 1.5rem; margin: 0; flex-shrink: 0;"><i
+                      class="ph ph-device-mobile"></i></div>
+                  <div style="text-align: left;">
+                    <h5 class="mb-1" style="font-size: 1.1rem;">Mobile Unit A (NexaGo)</h5>
+                    <p class="font-size-caption text-muted mb-0">TID: 8849202</p>
+                  </div>
+                </div>
+                <span class="status-badge status-error">Offline (2 days)</span>
+              </div>
+
+              <button class="btn btn-outline" style="justify-content: center;"><i class="ph ph-plus"></i> Add
+                Terminal</button>
+            </div>
+
+            <!-- Right Column -->
+            <div style="display: flex; flex-direction: column; gap: var(--space-8); width: 100%;">
+
+              <!-- API Keys -->
+              <div class="card" style="align-items: center; text-align: center; padding: var(--space-8);">
+                <h4 class="mb-6" style="text-align: center; width: 100%;">API Keys</h4>
+                <div class="form-group w-full"
+                  style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+                  <label class="form-label" style="text-align: center; display: block;">Live Publishable Key</label>
+                  <div class="flex gap-2 justify-center" style="justify-content: center; width: 100%;">
+                    <input type="text" class="form-control" value="pk_live_84hf92h83bf82bf82..." readonly
+                      style="background: var(--bg-tertiary); color: var(--text-muted); max-width: 250px;">
+                    <button class="btn btn-outline" style="padding: 0 1rem;"><i class="ph ph-copy"></i></button>
+                  </div>
+                </div>
+                <div style="text-align: center; width: 100%;">
+                  <button class="btn btn-primary" style="padding: 0.5rem 1rem;">Roll Keys</button>
+                </div>
+              </div>
+
+              <!-- Banking Info -->
+              <div class="card" style="align-items: center; text-align: center; padding: var(--space-8);">
+                <h4 class="mb-6" style="text-align: center; width: 100%;">Banking Information</h4>
+                <div class="flex items-center gap-4 mb-6 text-secondary justify-center settings-item"
+                  style="text-align: left; justify-content: center; width: 100%;">
+                  <div class="feature-icon"
+                    style="width: 48px; height: 48px; font-size: 1.5rem; margin: 0; flex-shrink: 0;"><i
+                      class="ph ph-bank"></i></div>
+                  <div>
+                    <p class="font-weight-label mb-1 text-primary" style="font-size: 1.1rem;">JPMorgan Chase Bank, N.A.
+                    </p>
+                    <p class="font-size-caption mb-0 text-muted">Account ending in **** 5592</p>
+                  </div>
+                </div>
+                <div style="text-align: center; width: 100%;">
+                  <button class="btn btn-outline" style="padding: 0.5rem 1rem;">Update Account</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= PROFILE ================= -->
+        <div id="profile" class="dashboard-section">
+          <div class="card text-left" style="max-width: 800px; margin-inline: auto; align-items: flex-start;">
+            <h4 class="mb-6">Business Profile</h4>
+
+            <form data-validate action="#" class="w-full">
+              <div class="grid grid-cols-2 gap-4">
+                <div class="form-group">
+                  <label class="form-label">Legal Business Name</label>
+                  <input type="text" class="form-control" value="Fresh Market LLC" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Doing Business </label>
+                  <input type="text" class="form-control" value="Fresh Market">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div class="form-group">
+                  <label class="form-label">Tax ID (EIN)</label>
+                  <input type="text" class="form-control" value="**-***8392" disabled
+                    style="background: var(--bg-tertiary); color: var(--text-muted);">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Phone Number</label>
+                  <input type="tel" class="form-control" value="(555) 123-4567" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Business Address</label>
+                <input type="text" class="form-control mb-2" value="1200 Retail Way" required>
+                <div class="grid grid-cols-3 gap-2">
+                  <input type="text" class="form-control" value="Austin" required>
+                  <input type="text" class="form-control" value="TX" required>
+                  <input type="text" class="form-control" value="78701" required>
+                </div>
+              </div>
+
+              <hr style="border: none; border-top: 1px solid var(--border-color); margin: var(--space-6) 0;">
+              <h5 class="mb-4">Authorized Users</h5>
+
+              <div class="table-container mb-6">
+                <table class="data-table">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="font-weight-label">Jessica Palmer</div>
+                        <div class="font-size-caption text-muted">jessica@freshmarket.com</div>
+                      </td>
+                      <td>Admin (Owner)</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="font-weight-label">Michael Chang</div>
+                        <div class="font-size-caption text-muted">michael@freshmarket.com</div>
+                      </td>
+                      <td>Manager (View Only, Refunds)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="flex justify-between items-center profile-actions w-full">
+                <button type="button" class="btn btn-outline" style="padding: 0.5rem 1rem;"><i
+                    class="ph ph-user-plus"></i> Invite User</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+</body>
+
+</html>

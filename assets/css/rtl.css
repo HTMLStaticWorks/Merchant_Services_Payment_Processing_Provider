@@ -1,0 +1,52 @@
+/* RTL Overrides for PayNexa */
+
+[dir="rtl"], .rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] .logo {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .nav-menu {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .drawer {
+  right: auto;
+  left: -100%;
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[dir="rtl"] .drawer-open .drawer {
+  left: 0;
+  right: auto;
+}
+
+[dir="rtl"] .text-left {
+  text-align: right;
+}
+
+[dir="rtl"] .text-right {
+  text-align: left;
+}
+
+/* Keep rate figures tabular and not mirrored */
+[dir="rtl"] .rate-figure {
+  direction: ltr;
+  display: inline-block;
+}
+
+/* Table columns flip automatically with flex/grid in RTL context, 
+   ensuring grid properties use logical ordering. */
+[dir="rtl"] .grid {
+  /* CSS grid handles RTL naturally */
+}
+
+/* Footer overrides if any */
+@media (max-width: 768px) {
+  [dir="rtl"] .footer-grid {
+    text-align: center;
+  }
+}
