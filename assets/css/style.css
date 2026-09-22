@@ -216,6 +216,8 @@ img { max-width: 100%; height: auto; display: block; }
 .mb-12 { margin-bottom: var(--space-12); }
 .mb-16 { margin-bottom: var(--space-16); }
 .mt-2 { margin-top: var(--space-2); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-8 { margin-top: var(--space-8); }
 .mt-12 { margin-top: var(--space-12); }
 .pt-32 { padding-top: var(--space-16); }
 .pb-16 { padding-bottom: var(--space-16); }
@@ -494,12 +496,12 @@ img { max-width: 100%; height: auto; display: block; }
   gap: var(--space-2);
   flex-shrink: 0;
 }
-.logo-icon {
-  font-size: 1.5rem;
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Single source of truth for logo size: header, footer, drawer, auth, dashboard */
+.logo-img {
+  height: 38px;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
 }
 
 .nav-menu { display: flex; align-items: center; gap: var(--space-1); }
