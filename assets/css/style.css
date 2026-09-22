@@ -1120,7 +1120,8 @@ details[open] summary::after { transform: rotate(45deg); }
 }
 .check-list i { color: var(--accent-color); font-size: 1.125rem; flex-shrink: 0; margin-top: 2px; }
 
-@media (max-width: 900px) {
+/* Stay side-by-side down through tablet (768px); stack only on phones */
+@media (max-width: 640px) {
   .split-row { grid-template-columns: 1fr; }
   /* Text first, media below it once the columns stack */
   .split-row > * { order: 0 !important; }
@@ -1342,12 +1343,18 @@ details[open] summary::after { transform: rotate(45deg); }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.14;
+  opacity: 0.38;
   pointer-events: none;
-  -webkit-mask-image: radial-gradient(85% 75% at 50% 25%, #000 0%, transparent 100%);
-  mask-image: radial-gradient(85% 75% at 50% 25%, #000 0%, transparent 100%);
+  -webkit-mask-image: radial-gradient(100% 95% at 50% 35%, #000 35%, transparent 100%);
+  mask-image: radial-gradient(100% 95% at 50% 35%, #000 35%, transparent 100%);
 }
-[data-theme="dark"] .hero-bg-image { opacity: 0.2; }
+[data-theme="dark"] .hero-bg-image { opacity: 0.3; }
+
+/* The photo sits directly behind the copy, so the hero darkens its text a
+   step beyond the page defaults to hold contrast in light mode */
+.has-hero-image .lead { color: #3a4560; }
+.has-hero-image .hero-trust { color: var(--text-secondary); }
+[data-theme="dark"] .has-hero-image .lead { color: var(--text-secondary); }
 
 img.avatar { object-fit: cover; display: block; }
 
