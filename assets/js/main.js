@@ -179,38 +179,57 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. Savings Calculator Logic (index.html)
   const calcVolume = document.getElementById('calc-volume');
   const calcTicket = document.getElementById('calc-ticket');
-  const volDisplay = document.getElementById('vol-display');
-  const ticketDisplay = document.getElementById('ticket-display');
-  const calcSavings = document.getElementById('calc-savings');
-  const compFeeDisplay = document.getElementById('comp-fee');
-  const nexaFeeDisplay = document.getElementById('nexa-fee');
 
   if (calcVolume && calcTicket) {
-    function updateCalculator() {
-      const vol = parseInt(calcVolume.value);
-      const ticket = parseInt(calcTicket.value);
-      
-      // Formatting
-      volDisplay.textContent = '$' + vol.toLocaleString();
-      ticketDisplay.textContent = '$' + ticket.toLocaleString();
-      
-      // Competitor math (e.g. 2.9% + 30¢)
-      const transactions = vol / ticket;
-      const compFee = (vol * 0.029) + (transactions * 0.30);
-      
-      // PayNexa math (e.g. 2.4% + 10¢) - simplistic interchange plus representation
-      const nexaFee = (vol * 0.024) + (transactions * 0.10);
-      
-      const savings = compFee - nexaFee;
-      
-      compFeeDisplay.textContent = '$' + compFee.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-      nexaFeeDisplay.textContent = '$' + nexaFee.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-      calcSavings.textContent = '$' + savings.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    const volDisplay = document.getElementById('vol-display');
+    const ticketDisplay = document.getElementById('ticket-display');
+    const txnDisplay = document.getElementById('calc-txn-count');
+    const calcSavings = document.getElementById('calc-savings');
+    const annualDisplay = document.getElementById('calc-annual');
+    const compFeeDisplay = document.getElementById('comp-fee');
+    const nexaFeeDisplay = document.getElementById('nexa-fee');
+
+    // Published card-present averages used for the estimate.
+    const COMP_RATE = 0.029, COMP_FIXED = 0.30;
+    const NEXA_RATE = 0.024, NEXA_FIXED = 0.10;
+
+    const money = (n, digits) => '$' + n.toLocaleString(undefined, {
+      minimumFractionDigits: digits === undefined ? 2 : digits,
+      maximumFractionDigits: digits === undefined ? 2 : digits
+    });
+
+    // Paints the filled portion of the track up to the thumb.
+    function paintTrack(input) {
+      const min = Number(input.min), max = Number(input.max);
+      const pct = ((Number(input.value) - min) / (max - min)) * 100;
+      input.style.setProperty('--slider-fill', pct + '%');
     }
-    
+
+    function updateCalculator() {
+      const vol = Number(calcVolume.value);
+      const ticket = Number(calcTicket.value);
+      const transactions = Math.round(vol / ticket);
+
+      paintTrack(calcVolume);
+      paintTrack(calcTicket);
+
+      if (volDisplay) volDisplay.textContent = money(vol, 0);
+      if (ticketDisplay) ticketDisplay.textContent = money(ticket, 0);
+      if (txnDisplay) txnDisplay.textContent = transactions.toLocaleString();
+
+      const compFee = (vol * COMP_RATE) + (transactions * COMP_FIXED);
+      const nexaFee = (vol * NEXA_RATE) + (transactions * NEXA_FIXED);
+      const savings = compFee - nexaFee;
+
+      if (compFeeDisplay) compFeeDisplay.textContent = money(compFee);
+      if (nexaFeeDisplay) nexaFeeDisplay.textContent = money(nexaFee);
+      if (calcSavings) calcSavings.textContent = money(savings);
+      if (annualDisplay) annualDisplay.textContent = money(savings * 12, 0);
+    }
+
     calcVolume.addEventListener('input', updateCalculator);
     calcTicket.addEventListener('input', updateCalculator);
-    updateCalculator(); // init
+    updateCalculator();
   }
 
   // 8. API Code Explorer Logic (home2.html)
@@ -240,31 +259,91 @@ charge = paynexa.Charge.create(
     description="Order #1024",
 )
 
-print(charge.status) # "succeeded"`,
-      curl: `curl https://api.paynexa.com/v1/charges \\
-  -u sk_test_12345: \\
-  -d amount=2000 \\
-  -d currency=usd \\
-  -d source=tok_visa \\
-  -d description="Order #1024"`
+print(charge.status) # "succeeded"`
+    };
+
+    const showTab = (tab) => {
+      if (!tab || tab.classList.contains('active')) return;
+      codeTabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      codeDisplay.textContent = snippets[tab.getAttribute('data-lang')];
+      // restart the swap animation
+      codeDisplay.classList.remove('is-swapping');
+      void codeDisplay.offsetWidth;
+      codeDisplay.classList.add('is-swapping');
     };
 
     codeTabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        codeTabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        const lang = tab.getAttribute('data-lang');
-        codeDisplay.textContent = snippets[lang];
+        stopRotation();
+        showTab(tab);
       });
     });
+
+    // Auto-cycle through the languages so the block reads as interactive.
+    // Pauses on hover/focus, while off screen, and stops once the visitor
+    // picks a tab themselves.
+    const codeBlock = codeDisplay.closest('.code-block-wrapper') || codeDisplay;
+    const ROTATE_MS = 4500;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let rotateTimer = null;
+    let userTookOver = false;
+    let onScreen = false;
+
+    const tick = () => {
+      const current = document.querySelector('.code-tab.active') || codeTabs[0];
+      const next = codeTabs[(Array.prototype.indexOf.call(codeTabs, current) + 1) % codeTabs.length];
+      showTab(next);
+    };
+
+    function startRotation() {
+      if (rotateTimer || userTookOver || reduceMotion || !onScreen) return;
+      rotateTimer = setInterval(tick, ROTATE_MS);
+      codeBlock.classList.remove('is-paused');
+    }
+
+    function pauseRotation() {
+      clearInterval(rotateTimer);
+      rotateTimer = null;
+      codeBlock.classList.add('is-paused');
+    }
+
+    function stopRotation() {
+      userTookOver = true;
+      pauseRotation();
+    }
+
+    codeBlock.addEventListener('mouseenter', pauseRotation);
+    codeBlock.addEventListener('mouseleave', startRotation);
+    codeBlock.addEventListener('focusin', pauseRotation);
+    codeBlock.addEventListener('focusout', startRotation);
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          onScreen = entry.isIntersecting;
+          if (onScreen) startRotation();
+          else pauseRotation();
+        });
+      }, { threshold: 0.35 }).observe(codeBlock);
+    } else {
+      onScreen = true;
+      startRotation();
+    }
 
     if (copyBtn) {
       copyBtn.addEventListener('click', () => {
         navigator.clipboard.writeText(codeDisplay.textContent).then(() => {
           const originalHTML = copyBtn.innerHTML;
           copyBtn.innerHTML = '<i class="ph ph-check"></i> Copied';
+          copyBtn.classList.add('copied');
           setTimeout(() => {
             copyBtn.innerHTML = originalHTML;
+            copyBtn.classList.remove('copied');
           }, 2000);
         });
       });

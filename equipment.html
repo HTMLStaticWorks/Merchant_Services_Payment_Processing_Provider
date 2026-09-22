@@ -1,15 +1,19 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PayNexa - Equipment & POS Hardware</title>
-  <meta name="description" content="State-of-the-art payment terminals, mobile readers, and full POS systems for your business.">
-  
+  <meta name="description"
+    content="State-of-the-art payment terminals, mobile readers, and full POS systems for your business.">
+
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/rtl.css">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
 </head>
+
 <body>
   <!-- Drawer Overlay & Menu -->
   <div class="drawer-overlay"></div>
@@ -27,11 +31,11 @@
       <a href="home2.html" class="drawer-link">Home 2</a>
       <a href="solutions.html" class="drawer-link">Solutions</a>
       <a href="pricing.html" class="drawer-link">Pricing</a>
-      <a href="equipment.html" class="drawer-link active text-accent">Equipment</a>
-      
+      <a href="equipment.html" class="drawer-link active text-accent" aria-current="page">Equipment</a>
+
       <a href="contact.html" class="drawer-link">Contact</a>
       <a href="dashboard.html" class="drawer-link">Dashboard</a>
-</nav>
+    </nav>
     <div class="drawer-actions flex-col gap-4">
       <div class="flex justify-between" style="width: 100%;">
         <button class="icon-btn theme-toggle" aria-label="Toggle theme">
@@ -58,10 +62,10 @@
         <a href="solutions.html" class="nav-link">Solutions</a>
         <a href="pricing.html" class="nav-link">Pricing</a>
         <a href="equipment.html" class="nav-link active">Equipment</a>
-        
+
         <a href="contact.html" class="nav-link">Contact</a>
         <a href="dashboard.html" class="nav-link">Dashboard</a>
-</nav>
+      </nav>
       <div class="nav-actions">
         <button class="icon-btn theme-toggle" aria-label="Toggle theme">
           <i class="ph-fill ph-moon theme-icon-dark"></i>
@@ -83,37 +87,33 @@
     <section class="hero-padding bg-tertiary text-center pb-12">
       <div class="container animate-fade-up">
         <h1 class="mb-6">Hardware built for <br><span class="text-accent">performance</span></h1>
-        <p class="lead mx-auto mb-8" style="max-width: 600px;">From pocket-sized mobile readers to full kitchen display systems, we have the hardware to match your ambition.</p>
-        
-        <!-- Filter Tabs (Visual Mockup) -->
-        <div class="flex justify-center gap-4 flex-wrap">
-          <button class="btn btn-primary" style="padding: 0.5rem 1.25rem;">All Hardware</button>
-          <button class="btn btn-outline" style="padding: 0.5rem 1.25rem;">Countertop</button>
-          <button class="btn btn-outline" style="padding: 0.5rem 1.25rem;">Mobile</button>
-          <button class="btn btn-outline" style="padding: 0.5rem 1.25rem;">Full POS</button>
-        </div>
+        <p class="lead mx-auto" style="max-width: 600px;">From pocket-sized mobile readers to full kitchen display
+          systems, we have the hardware to match your ambition.</p>
       </div>
     </section>
 
     <!-- Product Grid -->
     <section>
       <div class="container">
-        <div class="grid grid-cols-3 gap-8">
-          
+        <div class="grid grid-cols-3 gap-8 product-grid">
+
           <!-- Product 1 -->
-          <div class="card" style="padding: 0; overflow: hidden; align-items: stretch; text-align: left;">
-            <div style="height: 240px; background-color: #fff; display: flex; align-items: center; justify-content: center; padding: var(--space-4); border-bottom: 1px solid var(--border-color);">
-              <img src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="NexaSmart Pro Terminal" style="max-height: 100%; object-fit: contain;">
+          <div class="card product-card">
+            <div class="product-media">
+              <img src="assets/images/product-nexasmart-pro-catalog.jpg" alt="NexaSmart Pro Terminal"
+                style="max-height: 100%; object-fit: contain;">
             </div>
-            <div style="padding: var(--space-6);">
+            <div class="product-body">
               <div class="badge mb-4">Countertop</div>
               <h3 class="mb-2">NexaSmart Pro</h3>
-              <p class="text-secondary mb-4" style="font-size: 0.95rem; min-height: 60px;">Our flagship dual-screen terminal. Perfect for retail checkout with built-in receipt printer and barcode scanner support.</p>
-              <ul class="flex-col gap-2 mb-6 text-muted font-size-caption">
+              <p class="text-secondary mb-4" style="font-size: 0.95rem;">Our flagship dual-screen terminal. Perfect for
+                retail checkout with built-in receipt printer and barcode scanner support.</p>
+              <ul class="flex-col gap-2 mb-6 text-muted font-size-caption product-bullets">
                 <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle"></i> Wi-Fi & Ethernet</li>
-                <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle"></i> 8" Customer Facing Display</li>
+                <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle"></i> 8" Customer Facing Display
+                </li>
               </ul>
-              <div class="flex justify-between items-center pt-4" style="border-top: 1px solid var(--border-color);">
+              <div class="product-footer">
                 <div>
                   <span class="font-weight-bold-inline text-primary" style="font-size: 1.25rem;">$299</span>
                   <span class="text-muted font-size-caption">or $15/mo</span>
@@ -124,19 +124,21 @@
           </div>
 
           <!-- Product 2 -->
-          <div class="card" style="padding: 0; overflow: hidden; align-items: stretch; text-align: left;">
-            <div style="height: 240px; background-color: #fff; display: flex; align-items: center; justify-content: center; padding: var(--space-4); border-bottom: 1px solid var(--border-color);">
-              <img src="https://images.unsplash.com/photo-1556742031-c6961e8560b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="NexaMobile Reader" style="max-height: 100%; object-fit: contain;">
+          <div class="card product-card">
+            <div class="product-media">
+              <img src="assets/images/product-nexago-reader-catalog.jpg" alt="NexaMobile Reader"
+                style="max-height: 100%; object-fit: contain;">
             </div>
-            <div style="padding: var(--space-6);">
+            <div class="product-body">
               <div class="badge mb-4">Mobile</div>
               <h3 class="mb-2">NexaGo Reader</h3>
-              <p class="text-secondary mb-4" style="font-size: 0.95rem; min-height: 60px;">Pocket-sized card reader that connects to your phone or tablet via Bluetooth. Ideal for pop-ups and services.</p>
-              <ul class="flex-col gap-2 mb-6 text-muted font-size-caption">
+              <p class="text-secondary mb-4" style="font-size: 0.95rem;">Pocket-sized card reader that connects to your
+                phone or tablet via Bluetooth. Ideal for pop-ups and services.</p>
+              <ul class="flex-col gap-2 mb-6 text-muted font-size-caption product-bullets">
                 <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle"></i> Bluetooth LE</li>
                 <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle"></i> iOS & Android App</li>
               </ul>
-              <div class="flex justify-between items-center pt-4" style="border-top: 1px solid var(--border-color);">
+              <div class="product-footer">
                 <div>
                   <span class="font-weight-bold-inline text-primary" style="font-size: 1.25rem;">$49</span>
                   <span class="text-accent font-size-caption font-weight-label">Free with account</span>
@@ -147,19 +149,21 @@
           </div>
 
           <!-- Product 3 -->
-          <div class="card" style="padding: 0; overflow: hidden; align-items: stretch; text-align: left;">
-            <div style="height: 240px; background-color: #fff; display: flex; align-items: center; justify-content: center; padding: var(--space-4); border-bottom: 1px solid var(--border-color);">
-              <img src="https://images.unsplash.com/photo-1556740714-a8395b3bf30f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="NexaStation Complete" style="max-height: 100%; object-fit: contain;">
+          <div class="card product-card">
+            <div class="product-media">
+              <img src="assets/images/product-nexastation-max-catalog.jpg" alt="NexaStation Complete"
+                style="max-height: 100%; object-fit: contain;">
             </div>
-            <div style="padding: var(--space-6);">
+            <div class="product-body">
               <div class="badge mb-4">Full POS</div>
               <h3 class="mb-2">NexaStation Max</h3>
-              <p class="text-secondary mb-4" style="font-size: 0.95rem; min-height: 60px;">A complete restaurant management system. Includes cash drawer, receipt printer, and 15" touch display.</p>
-              <ul class="flex-col gap-2 mb-6 text-muted font-size-caption">
+              <p class="text-secondary mb-4" style="font-size: 0.95rem;">A complete restaurant management system.
+                Includes cash drawer, receipt printer, and 15" touch display.</p>
+              <ul class="flex-col gap-2 mb-6 text-muted font-size-caption product-bullets">
                 <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle"></i> KDS Integration</li>
                 <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle"></i> Cash drawer included</li>
               </ul>
-              <div class="flex justify-between items-center pt-4" style="border-top: 1px solid var(--border-color);">
+              <div class="product-footer">
                 <div>
                   <span class="font-weight-bold-inline text-primary" style="font-size: 1.25rem;">$899</span>
                   <span class="text-muted font-size-caption">or $45/mo</span>
@@ -169,24 +173,118 @@
             </div>
           </div>
 
+          <!-- Product 4 -->
+          <div class="card product-card">
+            <div class="product-media">
+              <img src="assets/images/product-nexasmart-mini-catalog.jpg" alt="NexaSmart Mini Terminal"
+                style="max-height: 100%; object-fit: contain;">
+            </div>
+            <div class="product-body">
+              <div class="badge mb-4">Countertop</div>
+              <h3 class="mb-2">NexaSmart Mini</h3>
+              <p class="text-secondary mb-4" style="font-size: 0.95rem;">A compact terminal that packs a punch. Ideal
+                for small retail shops and boutiques needing reliable, fast transactions.</p>
+              <ul class="flex-col gap-2 mb-6 text-muted font-size-caption product-bullets">
+                <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle"></i> Wi-Fi & 4G Backup</li>
+                <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle"></i> Built-in Receipt Printer
+                </li>
+              </ul>
+              <div class="product-footer">
+                <div>
+                  <span class="font-weight-bold-inline text-primary" style="font-size: 1.25rem;">$199</span>
+                  <span class="text-muted font-size-caption">or $10/mo</span>
+                </div>
+                <a href="contact.html" class="btn btn-outline" style="padding: 0.5rem 1rem;">Add to Plan</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 5 -->
+          <div class="card product-card">
+            <div class="product-media">
+              <img src="assets/images/product-nexa-tap-catalog.jpg" alt="Nexa Tap Reader"
+                style="max-height: 100%; object-fit: contain;">
+            </div>
+            <div class="product-body">
+              <div class="badge mb-4">Mobile</div>
+              <h3 class="mb-2">Nexa Tap</h3>
+              <p class="text-secondary mb-4" style="font-size: 0.95rem;">Turn your smartphone into a payment terminal.
+                Accept contactless payments directly on your device with no extra hardware.</p>
+              <ul class="flex-col gap-2 mb-6 text-muted font-size-caption product-bullets">
+                <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle"></i> Tap to Pay on iPhone</li>
+                <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle"></i> Tap to Pay on Android</li>
+              </ul>
+              <div class="product-footer">
+                <div>
+                  <span class="font-weight-bold-inline text-primary" style="font-size: 1.25rem;">$0</span>
+                  <span class="text-accent font-size-caption font-weight-label">Free Software</span>
+                </div>
+                <a href="contact.html" class="btn btn-outline" style="padding: 0.5rem 1rem;">Add to Plan</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 6 -->
+          <div class="card product-card">
+            <div class="product-media">
+              <img src="assets/images/product-nexastation-kiosk-catalog.jpg" alt="NexaStation Kiosk"
+                style="max-height: 100%; object-fit: contain;">
+            </div>
+            <div class="product-body">
+              <div class="badge mb-4" style="background: rgba(16, 185, 129, 0.1); color: var(--success-color);">
+                Self-Serve</div>
+              <h3 class="mb-2">NexaStation Kiosk</h3>
+              <p class="text-secondary mb-4" style="font-size: 0.95rem;">A self-ordering kiosk that reduces wait times
+                and increases order accuracy. Perfect for quick-service restaurants.</p>
+              <ul class="flex-col gap-2 mb-6 text-muted font-size-caption product-bullets">
+                <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle"></i> 22" Touch Display</li>
+                <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle"></i> Integrated Payment Reader
+                </li>
+              </ul>
+              <div class="product-footer">
+                <div>
+                  <span class="font-weight-bold-inline text-primary" style="font-size: 1.25rem;">$1,499</span>
+                  <span class="text-muted font-size-caption">or $75/mo</span>
+                </div>
+                <a href="contact.html" class="btn btn-outline" style="padding: 0.5rem 1rem;">Add to Plan</a>
+              </div>
+            </div>
+          </div>
+
         </div>
+
+        <!-- Pagination (Visual Mockup) -->
+        <nav class="pagination" aria-label="Hardware pages">
+          <button class="pagination-arrow" type="button" aria-label="Previous page" disabled>
+            <i class="ph ph-arrow-left"></i>
+          </button>
+          <div class="pagination-pages">
+            <button class="pagination-page" type="button" aria-current="page">1</button>
+            <button class="pagination-page" type="button">2</button>
+            <button class="pagination-page" type="button">3</button>
+          </div>
+          <button class="pagination-arrow" type="button" aria-label="Next page">
+            <i class="ph ph-arrow-right"></i>
+          </button>
+        </nav>
       </div>
     </section>
 
     <!-- Compatibility Note -->
     <section class="bg-primary text-center">
       <div class="container" style="max-width: 800px;">
-        <h2 class="text-white mb-4">Bring your own device</h2>
-        <p class="lead text-white mx-auto mb-8" style="color: rgba(255,255,255,0.8);">Already invested in expensive POS hardware? PayNexa is agnostic and compatible with over 90% of terminals, gateways, and software providers on the market.</p>
-        
+        <h2 class="mb-4">Bring your own device</h2>
+        <p class="lead mx-auto mb-8">Already invested in expensive POS hardware? PayNexa is agnostic and compatible with
+          over 90% of terminals, gateways, and software providers on the market.</p>
+
         <div class="card bg-secondary" style="border: none;">
           <h4 class="mb-4">Compatible Gateway Networks</h4>
-          <div class="flex justify-center gap-8 flex-wrap text-muted">
-            <span class="font-weight-bold-inline text-uppercase" style="letter-spacing: 0.05em;">Authorize.Net</span>
-            <span class="font-weight-bold-inline text-uppercase" style="letter-spacing: 0.05em;">NMI</span>
-            <span class="font-weight-bold-inline text-uppercase" style="letter-spacing: 0.05em;">USAePay</span>
-            <span class="font-weight-bold-inline text-uppercase" style="letter-spacing: 0.05em;">Clover</span>
-            <span class="font-weight-bold-inline text-uppercase" style="letter-spacing: 0.05em;">PAX</span>
+          <div class="flex justify-center gap-4 flex-wrap text-muted gateway-list">
+            <span class="font-weight-bold-inline text-uppercase gateway-chip">Authorize.Net</span>
+            <span class="font-weight-bold-inline text-uppercase gateway-chip">NMI</span>
+            <span class="font-weight-bold-inline text-uppercase gateway-chip">USAePay</span>
+            <span class="font-weight-bold-inline text-uppercase gateway-chip">Clover</span>
+            <span class="font-weight-bold-inline text-uppercase gateway-chip">PAX</span>
           </div>
           <hr style="border: none; border-top: 1px solid var(--border-color); margin: var(--space-6) 0;">
           <p class="mb-4">Don't see your system listed? Contact our integrations team to verify compatibility.</p>
@@ -205,9 +303,10 @@
           <a href="index.html" class="logo mb-6">
             <i class="ph-fill ph-credit-card logo-icon"></i> PayNexa
           </a>
-          <p class="text-muted mb-6">Empowering businesses with secure, scalable, and transparent payment processing solutions globally.</p>
+          <p class="text-muted mb-6">Empowering businesses with secure, scalable, and transparent payment processing
+            solutions globally.</p>
           <div class="flex gap-4">
-            <a href="#" class="icon-btn"><i class="ph-fill ph-twitter-logo"></i></a>
+            <a href="#" class="icon-btn" aria-label="X"><i class="ph-fill ph-x-logo"></i></a>
             <a href="#" class="icon-btn"><i class="ph-fill ph-linkedin-logo"></i></a>
             <a href="#" class="icon-btn"><i class="ph-fill ph-facebook-logo"></i></a>
           </div>
@@ -226,15 +325,16 @@
           <div class="footer-links">
             <a href="pricing.html" class="footer-link">Pricing</a>
             <a href="equipment.html" class="footer-link">Equipment</a>
-            <a href="blog.html" class="footer-link">Blog</a>
             <a href="contact.html" class="footer-link">Contact</a>
           </div>
         </div>
         <div class="footer-col">
           <h4>Compliance & Trust</h4>
           <div class="footer-links">
-            <div class="flex items-center gap-2 text-muted mb-2"><i class="ph-fill ph-shield-check"></i> PCI-DSS Level 1</div>
-            <div class="flex items-center gap-2 text-muted mb-2"><i class="ph-fill ph-lock-key"></i> 256-bit Encryption</div>
+            <div class="flex items-center gap-2 text-muted mb-2"><i class="ph-fill ph-shield-check"></i> PCI-DSS Level 1
+            </div>
+            <div class="flex items-center gap-2 text-muted mb-2"><i class="ph-fill ph-lock-key"></i> 256-bit Encryption
+            </div>
             <a href="#" class="footer-link mt-2">Privacy Policy</a>
             <a href="#" class="footer-link">Terms of Service</a>
           </div>
@@ -248,5 +348,5 @@
 
   <script src="assets/js/main.js"></script>
 </body>
-</html>
 
+</html>

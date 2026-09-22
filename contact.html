@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/rtl.css">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
 </head>
 <body>
   <!-- Drawer Overlay & Menu -->
@@ -28,8 +29,7 @@
       <a href="solutions.html" class="drawer-link">Solutions</a>
       <a href="pricing.html" class="drawer-link">Pricing</a>
       <a href="equipment.html" class="drawer-link">Equipment</a>
-      <a href="blog.html" class="drawer-link">Blog</a>
-      <a href="contact.html" class="drawer-link active text-accent">Contact</a>
+      <a href="contact.html" class="drawer-link active text-accent" aria-current="page">Contact</a>
       <a href="dashboard.html" class="drawer-link">Dashboard</a>
 </nav>
     <div class="drawer-actions flex-col gap-4">
@@ -58,7 +58,6 @@
         <a href="solutions.html" class="nav-link">Solutions</a>
         <a href="pricing.html" class="nav-link">Pricing</a>
         <a href="equipment.html" class="nav-link">Equipment</a>
-        <a href="blog.html" class="nav-link">Blog</a>
         <a href="contact.html" class="nav-link active">Contact</a>
         <a href="dashboard.html" class="nav-link">Dashboard</a>
 </nav>
@@ -79,47 +78,20 @@
   </header>
 
   <main>
-    <section class="hero-padding pb-16">
+    <!-- Page Header -->
+    <section class="hero-padding bg-tertiary text-center pb-16">
+      <div class="container animate-fade-up">
+        <h1 class="mb-6">Let's talk <br><span class="text-accent">business</span></h1>
+        <p class="lead mx-auto" style="max-width: 600px;">Whether you have a question about pricing, hardware compatibility, or APIs, our team is ready to help.</p>
+      </div>
+    </section>
+
+    <section class="pb-16" style="padding-top: var(--space-12);">
       <div class="container">
         <div class="grid grid-cols-2 gap-12">
           
-          <!-- Contact Info & Map -->
+          <!-- Contact Form (Now on Left) -->
           <div class="animate-fade-up">
-            <h1 class="mb-6">Let's talk business</h1>
-            <p class="lead mb-8">Whether you have a question about pricing, hardware compatibility, or APIs, our team is ready to help.</p>
-            
-            <div class="grid grid-cols-2 gap-6 mb-8">
-              <div class="card bg-tertiary" style="padding: var(--space-4); border: none; align-items: flex-start; text-align: left;">
-                <i class="ph-fill ph-phone-call text-accent mb-4" style="font-size: 1.5rem;"></i>
-                <h4 class="mb-1">Sales</h4>
-                <p class="text-secondary font-size-caption mb-0">1-800-555-0199</p>
-              </div>
-              <div class="card bg-tertiary" style="padding: var(--space-4); border: none; align-items: flex-start; text-align: left;">
-                <i class="ph-fill ph-headset text-accent mb-4" style="font-size: 1.5rem;"></i>
-                <h4 class="mb-1">Support</h4>
-                <p class="text-secondary font-size-caption mb-0">1-800-555-0188</p>
-              </div>
-            </div>
-
-            <!-- Map Placeholder -->
-            <div class="map-container mb-8 rounded shadow-sm" style="height: 300px; background-color: var(--border-color); border-radius: var(--radius); overflow: hidden; position: relative;">
-              <!-- Google Maps placeholder -->
-              <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;">
-                <div style="background: var(--bg-primary); padding: var(--space-4); border-radius: var(--radius); text-align: center; box-shadow: var(--shadow-md);">
-                  <h5 class="mb-1">PayNexa HQ</h5>
-                  <p class="font-size-caption text-muted mb-0">123 Financial District<br>New York, NY 10005</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="flex gap-4">
-              <a href="#" class="icon-btn" style="background: var(--bg-tertiary);"><i class="ph-fill ph-twitter-logo"></i></a>
-              <a href="#" class="icon-btn" style="background: var(--bg-tertiary);"><i class="ph-fill ph-linkedin-logo"></i></a>
-            </div>
-          </div>
-
-          <!-- Contact Form -->
-          <div class="animate-fade-up delay-200">
             <div class="card" style="align-items: stretch; text-align: left;">
               <h3 class="mb-6 text-center">Send us a message</h3>
               <!-- Formspree placeholder action -->
@@ -133,6 +105,18 @@
                   <div class="form-group">
                     <label for="lastName" class="form-label">Last Name</label>
                     <input type="text" id="lastName" class="form-control" required>
+                  </div>
+                </div>
+
+                <!-- Two New Fields -->
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="form-group">
+                    <label for="companyName" class="form-label">Company Name</label>
+                    <input type="text" id="companyName" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" required>
                   </div>
                 </div>
 
@@ -161,9 +145,80 @@
             </div>
           </div>
 
+          <!-- Contact Info & Map (Now on Right) -->
+          <div class="animate-fade-up delay-200">
+            
+            <div class="grid grid-cols-2-sm gap-6 mb-8">
+              <div class="card bg-tertiary" style="padding: var(--space-4); border: none; align-items: center; text-align: center;">
+                <i class="ph-fill ph-phone-call text-accent mb-4" style="font-size: 1.5rem;"></i>
+                <h4 class="mb-1">Sales</h4>
+                <p class="text-secondary font-size-caption mb-0">1-800-555-0199</p>
+              </div>
+              <div class="card bg-tertiary" style="padding: var(--space-4); border: none; align-items: center; text-align: center;">
+                <i class="ph-fill ph-headset text-accent mb-4" style="font-size: 1.5rem;"></i>
+                <h4 class="mb-1">Support</h4>
+                <p class="text-secondary font-size-caption mb-0">1-800-555-0188</p>
+              </div>
+              <div class="card bg-tertiary" style="padding: var(--space-4); border: none; align-items: center; text-align: center;">
+                <i class="ph-fill ph-x-logo text-accent mb-4" style="font-size: 1.5rem;"></i>
+                <h4 class="mb-1">X</h4>
+                <a href="#" class="text-secondary font-size-caption mb-0" style="text-decoration: none;">@paynexa</a>
+              </div>
+              <div class="card bg-tertiary" style="padding: var(--space-4); border: none; align-items: center; text-align: center;">
+                <i class="ph-fill ph-linkedin-logo text-accent mb-4" style="font-size: 1.5rem;"></i>
+                <h4 class="mb-1">LinkedIn</h4>
+                <a href="#" class="text-secondary font-size-caption mb-0" style="text-decoration: none;">/company/paynexa</a>
+              </div>
+            </div>
+
+            <!-- Interactive Map -->
+            <div class="map-container mb-8 shadow-sm" style="height: 300px; border-radius: var(--radius); overflow: hidden; position: relative; background: var(--bg-tertiary);">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12096.536067713028!2d-74.01955054178556!3d40.70617631627914!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a1767119283%3A0xc66c1b3f79f538e1!2sFinancial%20District%2C%20New%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
+
+    <!-- FAQ Accordion -->
+    <section class="bg-tertiary">
+      <div class="container" style="max-width: 800px;">
+        <div class="section-header">
+          <h2>Frequently asked questions</h2>
+        </div>
+
+        <details>
+          <summary>How quickly will someone get back to me?</summary>
+          <div class="details-content">
+            Messages sent through this form reach a US-based specialist, not a ticket queue. We reply within one business day, and usually the same afternoon if you write before 3PM EST. If your request is urgent, call the support line instead &mdash; it is staffed 24/7.
+          </div>
+        </details>
+
+        <details>
+          <summary>What should I have ready for a rate quote?</summary>
+          <div class="details-content">
+            Three months of recent processing statements is all it takes. From those we can read your effective rate, the card mix you actually take and any fees buried in the monthly totals, then show you the same volume priced on our interchange-plus model. No statements yet? Tell us your monthly volume and average ticket and we will estimate from published card-present averages.
+          </div>
+        </details>
+
+        <details>
+          <summary>Do I need to switch banks to work with PayNexa?</summary>
+          <div class="details-content">
+            No. Your deposits keep landing in the business account you already use &mdash; we only need the routing and account numbers to set up funding. Nothing about your existing banking relationship, credit line or bookkeeping has to change.
+          </div>
+        </details>
+      </div>
+    </section>
+
   </main>
 
   <!-- Footer -->
@@ -176,7 +231,7 @@
           </a>
           <p class="text-muted mb-6">Empowering businesses with secure, scalable, and transparent payment processing solutions globally.</p>
           <div class="flex gap-4">
-            <a href="#" class="icon-btn"><i class="ph-fill ph-twitter-logo"></i></a>
+            <a href="#" class="icon-btn" aria-label="X"><i class="ph-fill ph-x-logo"></i></a>
             <a href="#" class="icon-btn"><i class="ph-fill ph-linkedin-logo"></i></a>
             <a href="#" class="icon-btn"><i class="ph-fill ph-facebook-logo"></i></a>
           </div>
@@ -195,7 +250,6 @@
           <div class="footer-links">
             <a href="pricing.html" class="footer-link">Pricing</a>
             <a href="equipment.html" class="footer-link">Equipment</a>
-            <a href="blog.html" class="footer-link">Blog</a>
             <a href="contact.html" class="footer-link">Contact</a>
           </div>
         </div>
@@ -218,4 +272,3 @@
   <script src="assets/js/main.js"></script>
 </body>
 </html>
-

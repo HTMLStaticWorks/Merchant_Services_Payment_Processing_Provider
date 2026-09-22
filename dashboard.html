@@ -197,7 +197,7 @@
 
     .table-container {
       width: 100%;
-      overflow-x: auto;
+      overflow-x: scroll;
     }
 
     .data-table {
@@ -223,6 +223,150 @@
 
     .data-table tr:last-child td {
       border-bottom: none;
+    }
+
+    /* Columns keep their natural width and scroll, rather than squeezing
+       until words break one letter per line */
+    .data-table {
+      min-width: 720px;
+    }
+
+    .data-table th,
+    .data-table td {
+      white-space: nowrap;
+    }
+
+    /* --- Mobile (<=640px): one card per row, label and value paired --- */
+    @media (max-width: 640px) {
+      .table-container {
+        overflow-x: visible;
+        padding: var(--space-4);
+      }
+
+      .data-table {
+        min-width: 0;
+      }
+
+      .data-table,
+      .data-table tbody,
+      .data-table tr,
+      .data-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .data-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
+      .data-table tr {
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius);
+        background: var(--bg-secondary);
+        padding: var(--space-2) var(--space-4);
+        margin-bottom: var(--space-4);
+      }
+
+      .data-table tr:last-child {
+        margin-bottom: 0;
+      }
+
+      .data-table td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-4);
+        padding: var(--space-3) 0;
+        border-bottom: 1px solid var(--border-color);
+        text-align: right;
+        white-space: normal;
+      }
+
+      .data-table tr td:last-child {
+        border-bottom: none;
+      }
+
+      .data-table td::before {
+        content: attr(data-label);
+        flex: 0 0 auto;
+        color: var(--text-muted);
+        font-size: var(--size-caption);
+        font-weight: var(--weight-label);
+        text-align: left;
+      }
+
+      .data-table td:not([data-label])::before {
+        content: none;
+      }
+    }
+
+    /* --- Settings panels ---
+       The grid tracks the content area, not the viewport, so the panels
+       drop to one column as soon as a column would get cramped. */
+    .settings-grid {
+      grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
+      align-items: start;
+    }
+
+    /* Terminal and bank rows: icon + text stay together, the status badge
+       drops to its own line rather than squashing the device name */
+    .settings-row {
+      flex-wrap: wrap;
+      row-gap: var(--space-3);
+    }
+
+    .settings-row .status-badge {
+      white-space: nowrap;
+    }
+
+    .key-row {
+      flex-wrap: wrap;
+      row-gap: var(--space-3);
+    }
+
+    @media (max-width: 1024px) {
+      .settings-grid .card {
+        padding: var(--space-6) !important;
+      }
+
+      .key-row .form-control {
+        max-width: none !important;
+        flex: 1 1 12rem;
+      }
+    }
+
+    /* Always-visible accent scrollbar on scrollable tables */
+    .table-container {
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-color) rgba(var(--accent-rgb), 0.12);
+    }
+
+    .table-container::-webkit-scrollbar {
+      -webkit-appearance: none;
+      height: 10px;
+      width: 10px;
+    }
+
+    .table-container::-webkit-scrollbar-track {
+      background: rgba(var(--accent-rgb), 0.12);
+      border-radius: var(--radius-full);
+    }
+
+    .table-container::-webkit-scrollbar-thumb {
+      background: var(--accent-color);
+      border-radius: var(--radius-full);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+
+    .table-container::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-hover);
+      background-clip: padding-box;
     }
 
     .status-badge {
@@ -382,6 +526,7 @@
       }
     }
   </style>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
 </head>
 
 <body>
@@ -524,28 +669,28 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>BAT-9021</td>
-                    <td>Oct 19, 2026 â€¢ 11:00 PM</td>
-                    <td>$14,230.50</td>
-                    <td class="text-error">-$384.20</td>
-                    <td class="font-weight-bold-inline">$13,846.30</td>
-                    <td><span class="status-badge status-success">Deposited</span></td>
+                    <td data-label="Batch ID">BAT-9021</td>
+                    <td data-label="Date &amp; Time">Oct 19, 2026 &middot; 11:00 PM</td>
+                    <td data-label="Gross Sales">$14,230.50</td>
+                    <td class="text-error" data-label="Fees &amp; Adjustments">-$384.20</td>
+                    <td class="font-weight-bold-inline" data-label="Net Deposit">$13,846.30</td>
+                    <td data-label="Status"><span class="status-badge status-success">Deposited</span></td>
                   </tr>
                   <tr>
-                    <td>BAT-9020</td>
-                    <td>Oct 18, 2026 â€¢ 11:00 PM</td>
-                    <td>$15,100.00</td>
-                    <td class="text-error">-$402.10</td>
-                    <td class="font-weight-bold-inline">$14,697.90</td>
-                    <td><span class="status-badge status-success">Deposited</span></td>
+                    <td data-label="Batch ID">BAT-9020</td>
+                    <td data-label="Date &amp; Time">Oct 18, 2026 &middot; 11:00 PM</td>
+                    <td data-label="Gross Sales">$15,100.00</td>
+                    <td class="text-error" data-label="Fees &amp; Adjustments">-$402.10</td>
+                    <td class="font-weight-bold-inline" data-label="Net Deposit">$14,697.90</td>
+                    <td data-label="Status"><span class="status-badge status-success">Deposited</span></td>
                   </tr>
                   <tr>
-                    <td>BAT-9019</td>
-                    <td>Oct 17, 2026 â€¢ 11:00 PM</td>
-                    <td>$18,450.25</td>
-                    <td class="text-error">-$495.30</td>
-                    <td class="font-weight-bold-inline">$17,954.95</td>
-                    <td><span class="status-badge status-success">Deposited</span></td>
+                    <td data-label="Batch ID">BAT-9019</td>
+                    <td data-label="Date &amp; Time">Oct 17, 2026 &middot; 11:00 PM</td>
+                    <td data-label="Gross Sales">$18,450.25</td>
+                    <td class="text-error" data-label="Fees &amp; Adjustments">-$495.30</td>
+                    <td class="font-weight-bold-inline" data-label="Net Deposit">$17,954.95</td>
+                    <td data-label="Status"><span class="status-badge status-success">Deposited</span></td>
                   </tr>
                 </tbody>
               </table>
@@ -574,29 +719,32 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="font-weight-label">September 2026</td>
-                    <td>$345,670.00</td>
-                    <td>9,450</td>
-                    <td>$8,245.10</td>
-                    <td><button class="btn btn-outline" style="padding: 0.25rem 0.75rem; font-size: 0.85rem;"
+                    <td class="font-weight-label" data-label="Month">September 2026</td>
+                    <td data-label="Total Volume">$345,670.00</td>
+                    <td data-label="Transactions">9,450</td>
+                    <td data-label="Total Fees">$8,245.10</td>
+                    <td data-label="Action"><button class="btn btn-outline"
+                        style="padding: 0.25rem 0.75rem; font-size: 0.85rem;"
                         onclick="alert('Downloading PDF statement...')"><i class="ph ph-download-simple"></i> Download
                         PDF</button></td>
                   </tr>
                   <tr>
-                    <td class="font-weight-label">August 2026</td>
-                    <td>$352,100.00</td>
-                    <td>9,620</td>
-                    <td>$8,410.25</td>
-                    <td><button class="btn btn-outline" style="padding: 0.25rem 0.75rem; font-size: 0.85rem;"><i
-                          class="ph ph-download-simple"></i> Download PDF</button></td>
+                    <td class="font-weight-label" data-label="Month">August 2026</td>
+                    <td data-label="Total Volume">$352,100.00</td>
+                    <td data-label="Transactions">9,620</td>
+                    <td data-label="Total Fees">$8,410.25</td>
+                    <td data-label="Action"><button class="btn btn-outline"
+                        style="padding: 0.25rem 0.75rem; font-size: 0.85rem;"><i class="ph ph-download-simple"></i>
+                        Download PDF</button></td>
                   </tr>
                   <tr>
-                    <td class="font-weight-label">July 2026</td>
-                    <td>$338,900.50</td>
-                    <td>9,100</td>
-                    <td>$8,015.80</td>
-                    <td><button class="btn btn-outline" style="padding: 0.25rem 0.75rem; font-size: 0.85rem;"><i
-                          class="ph ph-download-simple"></i> Download PDF</button></td>
+                    <td class="font-weight-label" data-label="Month">July 2026</td>
+                    <td data-label="Total Volume">$338,900.50</td>
+                    <td data-label="Transactions">9,100</td>
+                    <td data-label="Total Fees">$8,015.80</td>
+                    <td data-label="Action"><button class="btn btn-outline"
+                        style="padding: 0.25rem 0.75rem; font-size: 0.85rem;"><i class="ph ph-download-simple"></i>
+                        Download PDF</button></td>
                   </tr>
                 </tbody>
               </table>
@@ -644,24 +792,24 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>CB-10492</td>
-                    <td>Oct 15, 2026</td>
-                    <td>Fraudulent - Card Not Present (Visa 10.4)</td>
-                    <td class="font-weight-bold-inline">$124.50</td>
-                    <td><span class="status-badge status-warning">Open</span></td>
-                    <td>
+                    <td data-label="Case ID">CB-10492</td>
+                    <td data-label="Date Filed">Oct 15, 2026</td>
+                    <td data-label="Reason Code">Fraudulent - Card Not Present (Visa 10.4)</td>
+                    <td class="font-weight-bold-inline" data-label="Amount">$124.50</td>
+                    <td data-label="Status"><span class="status-badge status-warning">Open</span></td>
+                    <td data-label="Action Needed">
                       <button class="btn-link" style="background: none; border: none; padding: 0;"
                         onclick="document.getElementById('uploadModal').style.display='flex'">Upload Evidence</button>
                     </td>
                   </tr>
                   <tr>
-                    <td>CB-10488</td>
-                    <td>Oct 12, 2026</td>
-                    <td>Product Not Received (MC 4855)</td>
-                    <td class="font-weight-bold-inline">$45.00</td>
-                    <td><span class="status-badge status-accent"
+                    <td data-label="Case ID">CB-10488</td>
+                    <td data-label="Date Filed">Oct 12, 2026</td>
+                    <td data-label="Reason Code">Product Not Received (MC 4855)</td>
+                    <td class="font-weight-bold-inline" data-label="Amount">$45.00</td>
+                    <td data-label="Status"><span class="status-badge status-accent"
                         style="background: rgba(6,182,212,0.1); color: var(--accent-color);">Under Review</span></td>
-                    <td><span class="text-muted font-size-caption">Awaiting Bank</span></td>
+                    <td data-label="Action Needed"><span class="text-muted font-size-caption">Awaiting Bank</span></td>
                   </tr>
                 </tbody>
               </table>
@@ -748,28 +896,28 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Oct 20, 2026 • 10:14 AM</td>
-                    <td><i class="ph-fill ph-credit-card text-muted"></i> Visa (Credit)</td>
-                    <td>**** 4242</td>
-                    <td class="font-weight-bold-inline">$45.00</td>
-                    <td>AUTH-991</td>
-                    <td><span class="status-badge status-success">Approved</span></td>
+                    <td data-label="Date &amp; Time">Oct 20, 2026 • 10:14 AM</td>
+                    <td data-label="Card Type"><i class="ph-fill ph-credit-card text-muted"></i> Visa (Credit)</td>
+                    <td data-label="Last 4">**** 4242</td>
+                    <td class="font-weight-bold-inline" data-label="Amount">$45.00</td>
+                    <td data-label="Auth Code">AUTH-991</td>
+                    <td data-label="Status"><span class="status-badge status-success">Approved</span></td>
                   </tr>
                   <tr>
-                    <td>Oct 20, 2026 • 10:02 AM</td>
-                    <td><i class="ph-fill ph-credit-card text-muted"></i> Mastercard (Debit)</td>
-                    <td>**** 1123</td>
-                    <td class="font-weight-bold-inline">$12.50</td>
-                    <td>AUTH-990</td>
-                    <td><span class="status-badge status-success">Approved</span></td>
+                    <td data-label="Date &amp; Time">Oct 20, 2026 • 10:02 AM</td>
+                    <td data-label="Card Type"><i class="ph-fill ph-credit-card text-muted"></i> Mastercard (Debit)</td>
+                    <td data-label="Last 4">**** 1123</td>
+                    <td class="font-weight-bold-inline" data-label="Amount">$12.50</td>
+                    <td data-label="Auth Code">AUTH-990</td>
+                    <td data-label="Status"><span class="status-badge status-success">Approved</span></td>
                   </tr>
                   <tr>
-                    <td>Oct 20, 2026 • 09:45 AM</td>
-                    <td><i class="ph-fill ph-credit-card text-muted"></i> Amex (Credit)</td>
-                    <td>**** 3004</td>
-                    <td class="font-weight-bold-inline">$150.00</td>
-                    <td>DECL-102</td>
-                    <td><span class="status-badge status-error">Declined (NSF)</span></td>
+                    <td data-label="Date &amp; Time">Oct 20, 2026 • 09:45 AM</td>
+                    <td data-label="Card Type"><i class="ph-fill ph-credit-card text-muted"></i> Amex (Credit)</td>
+                    <td data-label="Last 4">**** 3004</td>
+                    <td class="font-weight-bold-inline" data-label="Amount">$150.00</td>
+                    <td data-label="Auth Code">DECL-102</td>
+                    <td data-label="Status"><span class="status-badge status-error">Declined (NSF)</span></td>
                   </tr>
                 </tbody>
               </table>
@@ -779,33 +927,33 @@
 
         <!-- ================= SETTINGS ================= -->
         <div id="settings" class="dashboard-section">
-          <div class="grid grid-cols-2 gap-8">
+          <div class="grid gap-8 settings-grid">
             <!-- Linked Terminals -->
             <div class="card" style="align-items: center; text-align: center; padding: var(--space-8);">
               <h4 class="mb-6" style="text-align: center; width: 100%;">Linked Terminals</h4>
 
-              <div class="flex items-center justify-between mb-4 pb-4 w-full settings-item"
+              <div class="flex items-center justify-between mb-4 pb-4 w-full settings-item settings-row"
                 style="border-bottom: 1px solid var(--border-color);">
                 <div class="flex items-center gap-4 settings-item">
                   <div class="feature-icon"
                     style="width: 48px; height: 48px; font-size: 1.5rem; margin: 0; flex-shrink: 0;"><i
                       class="ph ph-desktop"></i></div>
                   <div style="text-align: left;">
-                    <h5 class="mb-1" style="font-size: 1.1rem;">Register 1 (NexaSmart Pro)</h5>
+                    <h5 class="mb-1" style="font-size: 1.1rem;">Register 1 (Nexa Pro)</h5>
                     <p class="font-size-caption text-muted mb-0">TID: 8849201</p>
                   </div>
                 </div>
                 <span class="status-badge status-success">Online</span>
               </div>
 
-              <div class="flex items-center justify-between mb-6 pb-4 w-full settings-item"
+              <div class="flex items-center justify-between mb-6 pb-4 w-full settings-item settings-row"
                 style="border-bottom: 1px solid var(--border-color);">
                 <div class="flex items-center gap-4 settings-item">
                   <div class="feature-icon"
                     style="width: 48px; height: 48px; font-size: 1.5rem; margin: 0; flex-shrink: 0;"><i
                       class="ph ph-device-mobile"></i></div>
                   <div style="text-align: left;">
-                    <h5 class="mb-1" style="font-size: 1.1rem;">Mobile Unit A (NexaGo)</h5>
+                    <h5 class="mb-1" style="font-size: 1.1rem;">Mobile (NexaGo)</h5>
                     <p class="font-size-caption text-muted mb-0">TID: 8849202</p>
                   </div>
                 </div>
@@ -825,7 +973,7 @@
                 <div class="form-group w-full"
                   style="text-align: center; display: flex; flex-direction: column; align-items: center;">
                   <label class="form-label" style="text-align: center; display: block;">Live Publishable Key</label>
-                  <div class="flex gap-2 justify-center" style="justify-content: center; width: 100%;">
+                  <div class="flex gap-2 justify-center key-row" style="justify-content: center; width: 100%;">
                     <input type="text" class="form-control" value="pk_live_84hf92h83bf82bf82..." readonly
                       style="background: var(--bg-tertiary); color: var(--text-muted); max-width: 250px;">
                     <button class="btn btn-outline" style="padding: 0 1rem;"><i class="ph ph-copy"></i></button>
@@ -891,9 +1039,9 @@
               <div class="form-group">
                 <label class="form-label">Business Address</label>
                 <input type="text" class="form-control mb-2" value="1200 Retail Way" required>
-                <div class="grid grid-cols-3 gap-2">
+                <div class="grid grid-cols-2 gap-4">
                   <input type="text" class="form-control" value="Austin" required>
-                  <input type="text" class="form-control" value="TX" required>
+
                   <input type="text" class="form-control" value="78701" required>
                 </div>
               </div>
@@ -901,25 +1049,22 @@
               <hr style="border: none; border-top: 1px solid var(--border-color); margin: var(--space-6) 0;">
               <h5 class="mb-4">Authorized Users</h5>
 
-              <div class="table-container mb-6">
-                <table class="data-table">
-                  <tbody>
-                    <tr>
-                      <td>
-                        <div class="font-weight-label">Jessica Palmer</div>
-                        <div class="font-size-caption text-muted">jessica@freshmarket.com</div>
-                      </td>
-                      <td>Admin (Owner)</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="font-weight-label">Michael Chang</div>
-                        <div class="font-size-caption text-muted">michael@freshmarket.com</div>
-                      </td>
-                      <td>Manager (View Only, Refunds)</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div class="mb-6">
+                <div class="flex justify-between items-center"
+                  style="padding: var(--space-3) 0; border-bottom: 1px solid var(--border-color); gap: var(--space-4);">
+                  <div>
+                    <div class="font-weight-label">Jessica Palmer</div>
+                    <div class="font-size-caption text-muted">jessica@freshmarket.com</div>
+                  </div>
+                  <div class="font-size-caption text-muted">Admin (Owner)</div>
+                </div>
+                <div class="flex justify-between items-center" style="padding: var(--space-3) 0; gap: var(--space-4);">
+                  <div>
+                    <div class="font-weight-label">Michael Chang</div>
+                    <div class="font-size-caption text-muted">michael@freshmarket.com</div>
+                  </div>
+                  <div class="font-size-caption text-muted">Admin (Refunds)</div>
+                </div>
               </div>
 
               <div class="flex justify-between items-center profile-actions w-full">

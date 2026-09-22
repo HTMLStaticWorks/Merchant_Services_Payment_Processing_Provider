@@ -1,15 +1,19 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PayNexa - Industry Solutions</title>
-  <meta name="description" content="Tailored payment processing solutions for retail, restaurants, e-commerce, and professional services.">
-  
+  <meta name="description"
+    content="Tailored payment processing solutions for retail, restaurants, e-commerce, and professional services.">
+
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/rtl.css">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
 </head>
+
 <body>
   <!-- Drawer Overlay & Menu -->
   <div class="drawer-overlay"></div>
@@ -25,13 +29,13 @@
     <nav class="drawer-nav">
       <a href="index.html" class="drawer-link">Home</a>
       <a href="home2.html" class="drawer-link">Home 2</a>
-      <a href="solutions.html" class="drawer-link active text-accent">Solutions</a>
+      <a href="solutions.html" class="drawer-link active text-accent" aria-current="page">Solutions</a>
       <a href="pricing.html" class="drawer-link">Pricing</a>
       <a href="equipment.html" class="drawer-link">Equipment</a>
-      
+
       <a href="contact.html" class="drawer-link">Contact</a>
       <a href="dashboard.html" class="drawer-link">Dashboard</a>
-</nav>
+    </nav>
     <div class="drawer-actions flex-col gap-4">
       <div class="flex justify-between" style="width: 100%;">
         <button class="icon-btn theme-toggle" aria-label="Toggle theme">
@@ -58,10 +62,10 @@
         <a href="solutions.html" class="nav-link active">Solutions</a>
         <a href="pricing.html" class="nav-link">Pricing</a>
         <a href="equipment.html" class="nav-link">Equipment</a>
-        
+
         <a href="contact.html" class="nav-link">Contact</a>
         <a href="dashboard.html" class="nav-link">Dashboard</a>
-</nav>
+      </nav>
       <div class="nav-actions">
         <button class="icon-btn theme-toggle" aria-label="Toggle theme">
           <i class="ph-fill ph-moon theme-icon-dark"></i>
@@ -83,22 +87,24 @@
     <section class="hero-padding bg-tertiary text-center pb-16">
       <div class="container animate-fade-up">
         <h1 class="mb-6">Solutions built for <br><span class="text-accent">your industry</span></h1>
-        <p class="lead mx-auto" style="max-width: 600px;">Every business operates differently. Discover how PayNexa's tailored hardware and software combinations fit your exact workflow.</p>
+        <p class="lead mx-auto" style="max-width: 600px;">Every business operates differently. Discover how PayNexa's
+          tailored hardware and software combinations fit your exact workflow.</p>
       </div>
     </section>
 
     <!-- Retail Section -->
     <section id="retail">
       <div class="container">
-        <div class="grid grid-cols-2 gap-12 items-center">
+        <div class="grid grid-cols-2 gap-12 items-center solution-split">
           <div>
             <div class="flex items-center gap-2 mb-4 text-accent">
               <i class="ph-fill ph-storefront" style="font-size: 1.5rem;"></i>
               <span class="font-weight-label">Retail Solutions</span>
             </div>
             <h2 class="mb-4">Keep your checkout lines moving</h2>
-            <p class="lead mb-6">High-volume retail requires speed and reliability. Our countertop terminals process chip and tap payments in under 2 seconds, fully integrated with your inventory software.</p>
-            
+            <p class="lead mb-6">High-volume retail requires speed and reliability. Our countertop terminals process
+              chip and tap payments in under 2 seconds, fully integrated with your inventory software.</p>
+
             <div class="grid grid-cols-2 gap-4 mb-8">
               <div class="card" style="padding: var(--space-4);">
                 <i class="ph ph-desktop text-accent mb-2" style="font-size: 2rem;"></i>
@@ -114,7 +120,8 @@
             <a href="equipment.html" class="btn btn-primary">View Retail Hardware</a>
           </div>
           <div>
-            <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Retail checkout" class="rounded shadow-card" style="border-radius: var(--radius);">
+            <img src="assets/images/solution-retail-checkout-lines.jpg" alt="Retail checkout"
+              class="rounded shadow-card" style="border-radius: var(--radius);">
           </div>
         </div>
       </div>
@@ -123,15 +130,16 @@
     <!-- Restaurant Section -->
     <section id="restaurant" class="bg-tertiary">
       <div class="container">
-        <div class="grid grid-cols-2 gap-12 items-center">
-          <div style="order: 2;">
+        <div class="grid grid-cols-2 gap-12 items-center reverse-desktop solution-split">
+          <div>
             <div class="flex items-center gap-2 mb-4 text-accent">
               <i class="ph-fill ph-fork-knife" style="font-size: 1.5rem;"></i>
               <span class="font-weight-label">Restaurant & Hospitality</span>
             </div>
             <h2 class="mb-4">Turn tables faster with pay-at-table</h2>
-            <p class="lead mb-6">From fine dining to quick-serve, our restaurant solutions handle complex splitting, tip adjustments, and kitchen display integrations seamlessly.</p>
-            
+            <p class="lead mb-6">From fine dining to quick-serve, our restaurant solutions handle complex splitting, tip
+              adjustments, and kitchen display integrations seamlessly.</p>
+
             <div class="grid grid-cols-2 gap-4 mb-8">
               <div class="card" style="padding: var(--space-4);">
                 <i class="ph ph-device-mobile text-accent mb-2" style="font-size: 2rem;"></i>
@@ -146,8 +154,9 @@
             </div>
             <a href="contact.html" class="btn btn-primary">Talk to a Restaurant Expert</a>
           </div>
-          <div style="order: 1;">
-            <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Restaurant POS" class="rounded shadow-card" style="border-radius: var(--radius);">
+          <div>
+            <img src="assets/images/solution-restaurant-pos-tableside.jpg" alt="Restaurant POS"
+              class="rounded shadow-card" style="border-radius: var(--radius);">
           </div>
         </div>
       </div>
@@ -156,24 +165,29 @@
     <!-- E-commerce Section -->
     <section id="ecommerce">
       <div class="container">
-        <div class="grid grid-cols-2 gap-12 items-center">
+        <div class="grid grid-cols-2 gap-12 items-center solution-split">
           <div>
             <div class="flex items-center gap-2 mb-4 text-accent">
               <i class="ph-fill ph-shopping-cart" style="font-size: 1.5rem;"></i>
               <span class="font-weight-label">E-commerce</span>
             </div>
             <h2 class="mb-4">Maximize online conversion rates</h2>
-            <p class="lead mb-6">Our checkout APIs and pre-built plugins are designed to reduce cart abandonment while stopping fraudulent transactions before they cost you.</p>
-            
-            <ul class="flex-col gap-4 text-secondary mb-8">
-              <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-accent"></i> Seamless integrations with Shopify, WooCommerce, Magento</li>
-              <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-accent"></i> Apple Pay and Google Pay support</li>
-              <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-accent"></i> Advanced 3D Secure fraud prevention</li>
+            <p class="lead mb-6">Our checkout APIs and pre-built plugins are designed to reduce cart abandonment while
+              stopping fraudulent transactions before they cost you.</p>
+
+            <ul class="flex-col gap-4 text-secondary mb-8 solution-bullets">
+              <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-accent"></i> Seamless
+                integrations with Shopify, WooCommerce, Magento</li>
+              <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-accent"></i> Apple Pay and
+                Google Pay support</li>
+              <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-accent"></i> Advanced 3D Secure
+                fraud prevention</li>
             </ul>
             <a href="register.html" class="btn btn-primary">Get API Keys</a>
           </div>
           <div>
-            <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="E-commerce shopping cart" class="rounded shadow-card" style="border-radius: var(--radius);">
+            <img src="assets/images/solution-ecommerce-cart-checkout.jpg" alt="E-commerce shopping cart"
+              class="rounded shadow-card" style="border-radius: var(--radius);">
           </div>
         </div>
       </div>
@@ -182,15 +196,16 @@
     <!-- Professional Services Section -->
     <section id="services" class="bg-tertiary">
       <div class="container">
-        <div class="grid grid-cols-2 gap-12 items-center">
-          <div style="order: 2;">
+        <div class="grid grid-cols-2 gap-12 items-center reverse-desktop solution-split">
+          <div>
             <div class="flex items-center gap-2 mb-4 text-accent">
               <i class="ph-fill ph-briefcase" style="font-size: 1.5rem;"></i>
               <span class="font-weight-label">Professional Services</span>
             </div>
             <h2 class="mb-4">Get paid faster with digital invoicing</h2>
-            <p class="lead mb-6">Ideal for agencies, contractors, and medical offices. Send digital invoices, set up recurring billing, or take payments over the phone via our Virtual Terminal.</p>
-            
+            <p class="lead mb-6">Ideal for agencies, contractors, and medical offices. Send digital invoices, set up
+              recurring billing, or take payments over the phone via our Virtual Terminal.</p>
+
             <div class="grid grid-cols-2 gap-4 mb-8">
               <div class="card" style="padding: var(--space-4);">
                 <i class="ph ph-repeat text-accent mb-2" style="font-size: 2rem;"></i>
@@ -205,9 +220,40 @@
             </div>
             <a href="register.html" class="btn btn-primary">Sign Up for Virtual Terminal</a>
           </div>
-          <div style="order: 1;">
-            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Professional working on laptop" class="rounded shadow-card" style="border-radius: var(--radius);">
+          <div>
+            <img src="assets/images/solution-services-laptop-invoicing.jpg" alt="Professional working on laptop"
+              class="rounded shadow-card" style="border-radius: var(--radius);">
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Enquiry -->
+    <section class="bg-tertiary">
+      <div class="container">
+        <div class="card enquiry-card animate-fade-up">
+          <div class="enquiry-intro">
+            <span class="eyebrow">Not sure which fits?</span>
+            <h3 class="mb-2">Tell us what you sell</h3>
+            <p class="text-secondary mb-0">A specialist will match you to the right setup. No pitch, no obligation.</p>
+          </div>
+          <form data-validate action="#" method="POST" novalidate class="enquiry-form">
+            <div class="form-group mb-0">
+              <label for="enquiry-email" class="sr-only">Work email</label>
+              <input type="email" id="enquiry-email" class="form-control" placeholder="Work email" required>
+            </div>
+            <div class="form-group mb-0">
+              <label for="enquiry-industry" class="sr-only">Industry</label>
+              <select id="enquiry-industry" class="form-control" required>
+                <option value="">Industry</option>
+                <option>Retail</option>
+                <option>Restaurant</option>
+                <option>E-commerce</option>
+                <option>Professional services</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Get a match <i class="ph ph-arrow-right"></i></button>
+          </form>
         </div>
       </div>
     </section>
@@ -222,9 +268,10 @@
           <a href="index.html" class="logo mb-6">
             <i class="ph-fill ph-credit-card logo-icon"></i> PayNexa
           </a>
-          <p class="text-muted mb-6">Empowering businesses with secure, scalable, and transparent payment processing solutions globally.</p>
+          <p class="text-muted mb-6">Empowering businesses with secure, scalable, and transparent payment processing
+            solutions globally.</p>
           <div class="flex gap-4">
-            <a href="#" class="icon-btn"><i class="ph-fill ph-twitter-logo"></i></a>
+            <a href="#" class="icon-btn" aria-label="X"><i class="ph-fill ph-x-logo"></i></a>
             <a href="#" class="icon-btn"><i class="ph-fill ph-linkedin-logo"></i></a>
             <a href="#" class="icon-btn"><i class="ph-fill ph-facebook-logo"></i></a>
           </div>
@@ -243,15 +290,16 @@
           <div class="footer-links">
             <a href="pricing.html" class="footer-link">Pricing</a>
             <a href="equipment.html" class="footer-link">Equipment</a>
-            <a href="blog.html" class="footer-link">Blog</a>
             <a href="contact.html" class="footer-link">Contact</a>
           </div>
         </div>
         <div class="footer-col">
           <h4>Compliance & Trust</h4>
           <div class="footer-links">
-            <div class="flex items-center gap-2 text-muted mb-2"><i class="ph-fill ph-shield-check"></i> PCI-DSS Level 1</div>
-            <div class="flex items-center gap-2 text-muted mb-2"><i class="ph-fill ph-lock-key"></i> 256-bit Encryption</div>
+            <div class="flex items-center gap-2 text-muted mb-2"><i class="ph-fill ph-shield-check"></i> PCI-DSS Level 1
+            </div>
+            <div class="flex items-center gap-2 text-muted mb-2"><i class="ph-fill ph-lock-key"></i> 256-bit Encryption
+            </div>
             <a href="#" class="footer-link mt-2">Privacy Policy</a>
             <a href="#" class="footer-link">Terms of Service</a>
           </div>
@@ -265,5 +313,5 @@
 
   <script src="assets/js/main.js"></script>
 </body>
-</html>
 
+</html>
