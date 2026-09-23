@@ -37,6 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   rtlToggles.forEach(toggle => {
     toggle.addEventListener('click', () => {
+      // Disable transitions for the flip so the off-canvas drawer doesn't
+      // animate across the screen when it swaps sides.
+      html.classList.add('dir-switching');
       const isRtl = html.getAttribute('dir') === 'rtl';
       if (isRtl) {
         html.removeAttribute('dir');
@@ -45,6 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
         html.setAttribute('dir', 'rtl');
         localStorage.setItem('rtl', 'true');
       }
+      void html.offsetWidth; // flush styles before re-enabling transitions
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => html.classList.remove('dir-switching'));
+      });
     });
   });
 
@@ -349,4 +356,23 @@ print(charge.status) # "succeeded"`
       });
     }
   }
+
+  // Back to Top
+  const backToTop = document.createElement('button');
+  backToTop.type = 'button';
+  backToTop.className = 'back-to-top';
+  backToTop.setAttribute('aria-label', 'Back to top');
+  backToTop.innerHTML = '<i class="ph ph-arrow-up"></i>';
+  document.body.appendChild(backToTop);
+
+  const toggleBackToTop = () => {
+    backToTop.classList.toggle('visible', window.scrollY > 400);
+  };
+  window.addEventListener('scroll', toggleBackToTop, { passive: true });
+  toggleBackToTop();
+
+  backToTop.addEventListener('click', () => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
 });

@@ -20,6 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
       dashboardSections.forEach(sec => sec.classList.remove('active'));
       document.getElementById(targetId).classList.add('active');
 
+      // Start each section from the top
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      document.querySelectorAll('.content-area, .main-wrapper').forEach(el => { el.scrollTop = 0; });
+
       // Update Title
       topbarTitle.innerText = link.innerText.trim();
 
@@ -49,11 +53,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (ctx) {
     
     // Check theme to color chart appropriately
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const textColor = isDark ? '#94a3b8' : '#475569';
-    const gridColor = isDark ? '#334155' : '#e2e8f0';
+    const chartColors = () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      return {
+        textColor: isDark ? '#94a3b8' : '#475569',
+        gridColor: isDark ? '#334155' : '#e2e8f0'
+      };
+    };
+    const { textColor, gridColor } = chartColors();
 
-    new Chart(ctx, {
+    const volumeChart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: ['Oct 1', 'Oct 5', 'Oct 10', 'Oct 15', 'Oct 20', 'Oct 25', 'Oct 30'],
@@ -100,14 +109,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Handle Theme Change updates for chart
-    const themeToggles = document.querySelectorAll('.theme-toggle');
-    themeToggles.forEach(toggle => {
-      toggle.addEventListener('click', () => {
-        // Simple reload to let chart re-render with new CSS variables
-        // In a real app, update chart instance properties.
-        setTimeout(() => location.reload(), 300); 
-      });
-    });
+    // Recolor the chart in place when the theme changes (no page reload,
+    // so the user stays on the section they were viewing)
+    new MutationObserver(() => {
+      const { textColor, gridColor } = chartColors();
+      volumeChart.options.scales.y.grid.color = gridColor;
+      volumeChart.options.scales.y.ticks.color = textColor;
+      volumeChart.options.scales.x.ticks.color = textColor;
+      volumeChart.update('none');
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   }
 });

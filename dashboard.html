@@ -310,7 +310,20 @@
        drop to one column as soon as a column would get cramped. */
     .settings-grid {
       grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
-      align-items: start;
+      align-items: stretch;
+    }
+
+    /* Desktop & tablet landscape: two cards on top, banking card centred below */
+    @media (min-width: 1024px) {
+      .settings-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .settings-grid .settings-bank-card {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: 100%;
+        max-width: calc(50% - var(--space-4));
+      }
     }
 
     /* Terminal and bank rows: icon + text stay together, the status badge
@@ -549,7 +562,6 @@
         <a class="sidebar-link" data-target="statements"><i class="ph ph-file-text"></i> Statements</a>
         <a class="sidebar-link" data-target="chargebacks"><i class="ph ph-shield-warning"></i> Chargebacks</a>
         <a class="sidebar-link" data-target="reports"><i class="ph ph-chart-line-up"></i> Reports</a>
-        <div class="divider" style="margin: var(--space-2) 0;"></div>
         <a class="sidebar-link" data-target="settings"><i class="ph ph-sliders"></i> Terminal & Settings</a>
         <a class="sidebar-link" data-target="profile"><i class="ph ph-buildings"></i> Business Profile</a>
       </nav>
@@ -636,8 +648,8 @@
         <div id="settlements" class="dashboard-section">
 
           <div class="grid grid-cols-3 gap-6 mb-8">
-            <div class="card kpi-card bg-primary text-white"
-              style="border: none; align-items: flex-start; justify-content: center; background: var(--primary-color);">
+            <div class="card kpi-card surface-ink text-white"
+              style="align-items: flex-start; justify-content: center;">
               <span class="kpi-title" style="color: rgba(255,255,255,0.7);">Next Deposit (Tomorrow, 8AM)</span>
               <span class="kpi-value" style="color: #fff;">$11,890.45</span>
             </div>
@@ -799,7 +811,7 @@
                     <td data-label="Status"><span class="status-badge status-warning">Open</span></td>
                     <td data-label="Action Needed">
                       <button class="btn-link" style="background: none; border: none; padding: 0;"
-                        onclick="document.getElementById('uploadModal').style.display='flex'">Upload Evidence</button>
+                        onclick="document.getElementById('uploadModal').style.display='flex'"><i class="ph ph-upload-simple"></i> Upload Evidence</button>
                     </td>
                   </tr>
                   <tr>
@@ -852,7 +864,7 @@
         <div id="reports" class="dashboard-section">
           <div class="card text-left mb-8" style="padding: var(--space-6); align-items: flex-start;">
             <h4 class="mb-4">Generate Report</h4>
-            <div class="grid grid-cols-4 gap-4 w-full">
+            <div class="grid grid-cols-4 gap-4 w-full report-form">
               <div class="form-group mb-0">
                 <label class="form-label">Report Type</label>
                 <select class="form-control">
@@ -869,8 +881,9 @@
                 <label class="form-label">End Date</label>
                 <input type="date" class="form-control" value="2026-10-20">
               </div>
-              <div class="form-group mb-0 flex items-end">
-                <button class="btn btn-primary w-full" style="width: 100%;">Generate</button>
+              <div class="form-group mb-0 report-generate-cell">
+                <label class="form-label report-generate-spacer" aria-hidden="true">&nbsp;</label>
+                <button class="btn btn-primary report-generate-btn"><i class="ph ph-file-arrow-down"></i> Generate</button>
               </div>
             </div>
           </div>
@@ -964,8 +977,6 @@
                 Terminal</button>
             </div>
 
-            <!-- Right Column -->
-            <div style="display: flex; flex-direction: column; gap: var(--space-8); width: 100%;">
 
               <!-- API Keys -->
               <div class="card" style="align-items: center; text-align: center; padding: var(--space-8);">
@@ -985,7 +996,7 @@
               </div>
 
               <!-- Banking Info -->
-              <div class="card" style="align-items: center; text-align: center; padding: var(--space-8);">
+              <div class="card settings-bank-card" style="align-items: center; text-align: center; padding: var(--space-8);">
                 <h4 class="mb-6" style="text-align: center; width: 100%;">Banking Information</h4>
                 <div class="flex items-center gap-4 mb-6 text-secondary justify-center settings-item"
                   style="text-align: left; justify-content: center; width: 100%;">
@@ -1003,7 +1014,6 @@
                 </div>
               </div>
 
-            </div>
           </div>
         </div>
 

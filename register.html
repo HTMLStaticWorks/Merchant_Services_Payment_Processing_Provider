@@ -191,15 +191,23 @@
 
     .top-toggles {
       position: absolute;
-      top: -3rem;
-      right: 0;
+      top: 1.5rem;
+      inset-inline-end: 1.5rem;
+      z-index: 50;
       display: flex;
       gap: var(--space-2);
     }
 
     @media (max-width: 640px) {
       .top-toggles {
-        top: -2rem;
+        top: 1rem;
+        inset-inline-end: 1rem;
+      }
+
+      /* Reserve room above the card so the toggles never touch it */
+      body {
+        padding-top: 4.5rem;
+        padding-bottom: 2rem;
       }
 
       .auth-card {
@@ -212,17 +220,16 @@
 
 <body>
 
-  <div class="auth-container animate-fade-up">
+  <div class="top-toggles">
+    <button class="icon-btn theme-toggle" aria-label="Toggle Theme">
+      <i class="ph ph-moon"></i>
+    </button>
+    <button class="icon-btn rtl-toggle" aria-label="Toggle RTL">
+      <i class="ph ph-arrows-left-right"></i>
+    </button>
+  </div>
 
-    <!-- Toggles outside card on mobile since register card might be tall -->
-    <div class="top-toggles">
-      <button class="icon-btn theme-toggle" aria-label="Toggle Theme">
-        <i class="ph ph-moon"></i>
-      </button>
-      <button class="icon-btn rtl-toggle" aria-label="Toggle RTL">
-        <i class="ph ph-arrows-left-right"></i>
-      </button>
-    </div>
+  <div class="auth-container animate-fade-up">
 
     <div class="auth-card">
 
