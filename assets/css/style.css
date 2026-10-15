@@ -10,7 +10,7 @@
 
   --text-primary: #0b1020;
   --text-secondary: #55617a;
-  --text-muted: #8c98ae;
+  --text-muted: #5e6b80; /* was #8c98ae - darkened for WCAG AA contrast (≈5.3:1 on white) */
   --border-color: #e7ecf3;
   --border-strong: #d6dee9;
 
@@ -1343,7 +1343,7 @@ details[open] summary::after { transform: rotate(45deg); }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.38;
+  opacity: 0.52;
   pointer-events: none;
   -webkit-mask-image: radial-gradient(100% 95% at 50% 35%, #000 35%, transparent 100%);
   mask-image: radial-gradient(100% 95% at 50% 35%, #000 35%, transparent 100%);
@@ -1352,9 +1352,28 @@ details[open] summary::after { transform: rotate(45deg); }
 
 /* The photo sits directly behind the copy, so the hero darkens its text a
    step beyond the page defaults to hold contrast in light mode */
-.has-hero-image .lead { color: #3a4560; }
-.has-hero-image .hero-trust { color: var(--text-secondary); }
-[data-theme="dark"] .has-hero-image .lead { color: var(--text-secondary); }
+.has-hero-image .lead {
+  color: #141b2e;
+  font-weight: 500;
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.9), 0 0 14px rgba(255, 255, 255, 0.85), 0 0 28px rgba(255, 255, 255, 0.6);
+}
+.has-hero-image .hero-trust { color: #141b2e; font-weight: 600; gap: var(--space-3); }
+/* Frosted pills keep the trust items legible over busy parts of the photo */
+.has-hero-image .hero-trust > div {
+  padding: 0.375rem 0.875rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-sm);
+}
+[data-theme="dark"] .has-hero-image .lead { color: var(--text-secondary); font-weight: 400; text-shadow: none; }
+[data-theme="dark"] .has-hero-image .hero-trust { color: var(--text-secondary); font-weight: 500; }
+[data-theme="dark"] .has-hero-image .hero-trust > div {
+  background: rgba(var(--bg-secondary-rgb), 0.6);
+  border-color: var(--border-color);
+}
 
 img.avatar { object-fit: cover; display: block; }
 
@@ -1959,3 +1978,194 @@ img.avatar { object-fit: cover; display: block; }
   height: 2.75rem;
   padding-block: 0;
 }
+
+/* ---------- Inner page hero (full-bleed background photo) ---------- */
+.page-hero-bg {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: min(640px, 88vh);
+  display: flex;
+  align-items: center;
+  background: #0b1020;
+  color: #ffffff;
+}
+.page-hero-img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Each page sets --focus on its image so the subject stays in frame
+     when narrow screens crop the sides */
+  object-position: var(--focus, center);
+}
+/* Dark scrim, heaviest behind the centred copy, so white text holds AA
+   contrast on any photo in light and dark mode */
+.page-hero-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(70% 80% at 50% 50%, rgba(11, 16, 32, 0.6) 0%, transparent 100%),
+    rgba(11, 16, 32, 0.68);
+}
+.page-hero-content { width: 100%; text-align: center; }
+.page-hero-content > * { max-width: 46rem; margin-inline: auto; }
+.page-hero-content .badge { margin-inline: auto; }
+.page-hero-bg h1 { color: #ffffff; }
+.page-hero-bg .text-accent { color: #67e8f9; }
+.page-hero-bg .lead { color: rgba(255, 255, 255, 0.86); max-width: 36rem; margin-inline: auto; }
+.page-hero-bg .badge {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #a5f3fc;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.page-hero-bg .btn-outline {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}
+.page-hero-bg .btn-outline:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #ffffff;
+}
+/* Two equal-width buttons, centred as a pair */
+.page-hero-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  width: min(100%, 34rem);
+  margin: var(--space-8) auto 0;
+}
+.page-hero-actions .btn { width: 100%; }
+.page-hero-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-6);
+  justify-content: center;
+  margin-top: var(--space-8);
+  color: rgba(255, 255, 255, 0.86);
+  font-size: var(--size-label);
+}
+.page-hero-trust > span { display: inline-flex; align-items: center; gap: var(--space-2); }
+.page-hero-trust i { color: #67e8f9; }
+@media (max-width: 768px) {
+  .page-hero-bg { min-height: 0; }
+  .page-hero-bg::before { background: rgba(11, 16, 32, 0.78); }
+}
+@media (max-width: 540px) {
+  .page-hero-actions { grid-template-columns: 1fr; width: 100%; }
+}
+
+/* ---------- Gateway network logos ---------- */
+.gateway-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+.gateway-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-4);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background: var(--bg-secondary);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.gateway-logo:hover {
+  transform: translateY(-3px);
+  border-color: rgba(var(--accent-rgb), 0.45);
+  box-shadow: var(--shadow-card);
+}
+.gateway-logo img { width: 56px; height: 56px; }
+.gateway-logo .gateway-name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+.gateway-logo .gateway-type { font-size: var(--size-caption); color: var(--text-muted); margin-top: -0.5rem; }
+@media (max-width: 768px) { .gateway-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { .gateway-logo:hover { transform: none; } }
+
+/* Primary-brand CTA buttons on product cards */
+.product-footer .btn-primary { padding: 0.625rem 1rem; }
+
+/* ---------- Icon feature cards (equipment / about) ---------- */
+.icon-card { text-align: left; align-items: flex-start; }
+.icon-card .feature-icon { margin-bottom: var(--space-4); }
+.icon-card p { color: var(--text-secondary); margin-bottom: 0; }
+
+/* ---------- About timeline ---------- */
+.timeline { display: grid; gap: var(--space-3); max-width: 760px; margin-inline: auto; }
+.timeline-item {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: var(--space-6);
+}
+.timeline-year { font-family: var(--font-heading); font-weight: 700; font-size: 1.5rem; color: var(--accent-color); }
+.timeline-item p { color: var(--text-secondary); margin-bottom: 0; }
+.timeline-item {
+  position: relative;
+  padding: var(--space-6);
+  border: 1px solid transparent;
+  border-bottom-color: var(--border-color);
+  border-radius: var(--radius-lg);
+  transition: background var(--transition), border-color var(--transition),
+              box-shadow var(--transition), transform var(--transition);
+}
+.timeline-item:last-child { border-bottom-color: transparent; }
+/* Accent bar that grows in from the left edge on hover */
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 3px;
+  height: 0;
+  border-radius: 3px;
+  background: var(--gradient-accent);
+  transform: translateY(-50%);
+  transition: height var(--transition);
+}
+.timeline-year { transition: transform var(--transition), color var(--transition); transform-origin: left center; }
+.timeline-item h4 { transition: color var(--transition); }
+.timeline-item:hover {
+  background: var(--bg-secondary);
+  border-color: rgba(var(--accent-rgb), 0.3);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateX(6px);
+}
+.timeline-item:hover::before { height: 60%; }
+.timeline-item:hover .timeline-year { transform: scale(1.12); color: var(--accent-hover); }
+.timeline-item:hover h4 { color: var(--accent-color); }
+@media (max-width: 640px) {
+  .timeline-item { grid-template-columns: 1fr; gap: var(--space-2); }
+  .timeline-item:hover { transform: translateY(-3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .timeline-item:hover, .timeline-item:hover .timeline-year { transform: none; }
+}
+
+/* ---------- Leadership cards ---------- */
+.team-card { text-align: center; align-items: center; }
+.team-card img {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: var(--space-4);
+  border: 3px solid var(--bg-secondary);
+  box-shadow: var(--shadow-card);
+}
+.team-card .team-role { color: var(--accent-color); font-size: var(--size-label); font-weight: 600; margin-bottom: var(--space-3); }
+.team-card p { color: var(--text-secondary); font-size: var(--size-label); margin-bottom: 0; }

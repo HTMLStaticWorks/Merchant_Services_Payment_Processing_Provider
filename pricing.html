@@ -26,6 +26,7 @@
     <nav class="drawer-nav">
       <a href="index.html" class="drawer-link">Home</a>
       <a href="home2.html" class="drawer-link">Home 2</a>
+      <a href="about.html" class="drawer-link">About</a>
       <a href="solutions.html" class="drawer-link">Solutions</a>
       <a href="pricing.html" class="drawer-link active text-accent" aria-current="page">Pricing</a>
       <a href="equipment.html" class="drawer-link">Equipment</a>
@@ -56,6 +57,7 @@
       <nav class="nav-menu">
         <a href="index.html" class="nav-link">Home</a>
         <a href="home2.html" class="nav-link">Home 2</a>
+        <a href="about.html" class="nav-link">About</a>
         <a href="solutions.html" class="nav-link">Solutions</a>
         <a href="pricing.html" class="nav-link active">Pricing</a>
         <a href="equipment.html" class="nav-link">Equipment</a>
@@ -81,16 +83,34 @@
 
   <main>
     <!-- Page Header -->
-    <section class="hero-padding bg-tertiary text-center pb-16">
-      <div class="container animate-fade-up">
-        <h1 class="mb-6">Predictable pricing <br><span class="text-accent">built for growth</span></h1>
-        <p class="lead mx-auto" style="max-width: 600px;">We believe in complete transparency. What you see is exactly what you pay—no hidden fees, no statement fees, and no long-term contracts.</p>
+    <section class="page-hero-bg hero-padding pb-16">
+      <img class="page-hero-img" style="--focus: 80% 45%;" src="assets/images/hero-pricing-statement-review.jpg" alt="" aria-hidden="true">
+      <div class="container page-hero-content">
+        <div class="animate-fade-up">
+          <div class="badge mb-6"><i class="ph-fill ph-receipt"></i> Interchange-plus, no surprises</div>
+          <h1 class="mb-6">Predictable pricing <br><span class="text-accent">built for growth</span></h1>
+          <p class="lead">We believe in complete transparency. What you see is exactly what you pay&mdash;no hidden fees, no statement fees, and no long-term contracts.</p>
+          <div class="page-hero-actions">
+            <a href="#plans" class="btn btn-primary">Compare plans</a>
+            <a href="contact.html" class="btn btn-outline">Get a free statement review</a>
+          </div>
+          <div class="page-hero-trust">
+            <span><i class="ph-fill ph-check-circle"></i> Month-to-month</span>
+            <span><i class="ph-fill ph-check-circle"></i> No setup fees</span>
+            <span><i class="ph-fill ph-check-circle"></i> No early termination fees</span>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Pricing Cards -->
-    <section>
+    <section id="plans">
       <div class="container">
+        <div class="section-header animate-fade-up">
+          <span class="eyebrow">Plans &amp; pricing</span>
+          <h2>Choose the plan that fits your volume</h2>
+          <p class="lead">Every plan includes next-day funding, 24/7 US support and no long-term contracts.</p>
+        </div>
         <div class="grid grid-cols-3 gap-6 pricing-grid">
           
           <!-- Flat Rate -->
@@ -196,6 +216,7 @@
     <section class="bg-tertiary">
       <div class="container" style="max-width: 800px;">
         <div class="section-header">
+          <span class="eyebrow">FAQ</span>
           <h2>Frequently asked questions</h2>
         </div>
         
@@ -236,6 +257,22 @@
       </div>
     </section>
 
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-panel animate-fade-up">
+          <div class="badge mb-6">Free savings analysis</div>
+          <h2 class="mb-4">See exactly what you'd save</h2>
+          <p class="lead mb-8 mx-auto" style="max-width: 40rem;">Send us a recent statement and we'll return a
+            line-by-line comparison within one business day. No obligation.</p>
+          <div class="flex justify-center gap-4 flex-wrap">
+            <a href="register.html" class="btn btn-primary">Start processing <i class="ph ph-arrow-right"></i></a>
+            <a href="contact.html" class="btn btn-outline">Request my analysis</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- Footer -->
@@ -265,6 +302,7 @@
         <div class="footer-col">
           <h4>Company</h4>
           <div class="footer-links">
+            <a href="about.html" class="footer-link">About Us</a>
             <a href="pricing.html" class="footer-link">Pricing</a>
             <a href="equipment.html" class="footer-link">Equipment</a>
             <a href="contact.html" class="footer-link">Contact</a>

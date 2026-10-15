@@ -29,6 +29,7 @@
     <nav class="drawer-nav">
       <a href="index.html" class="drawer-link">Home</a>
       <a href="home2.html" class="drawer-link">Home 2</a>
+      <a href="about.html" class="drawer-link">About</a>
       <a href="solutions.html" class="drawer-link">Solutions</a>
       <a href="pricing.html" class="drawer-link">Pricing</a>
       <a href="equipment.html" class="drawer-link active text-accent" aria-current="page">Equipment</a>
@@ -59,6 +60,7 @@
       <nav class="nav-menu">
         <a href="index.html" class="nav-link">Home</a>
         <a href="home2.html" class="nav-link">Home 2</a>
+        <a href="about.html" class="nav-link">About</a>
         <a href="solutions.html" class="nav-link">Solutions</a>
         <a href="pricing.html" class="nav-link">Pricing</a>
         <a href="equipment.html" class="nav-link active">Equipment</a>
@@ -84,16 +86,29 @@
 
   <main>
     <!-- Page Header -->
-    <section class="hero-padding bg-tertiary text-center pb-12">
-      <div class="container animate-fade-up">
-        <h1 class="mb-6">Hardware built for <br><span class="text-accent">performance</span></h1>
-        <p class="lead mx-auto" style="max-width: 600px;">From pocket-sized mobile readers to full kitchen display
-          systems, we have the hardware to match your ambition.</p>
+    <section class="page-hero-bg hero-padding pb-16">
+      <img class="page-hero-img" style="--focus: 76% 60%;" src="assets/images/hero-equipment-terminal-lineup.jpg" alt="" aria-hidden="true">
+      <div class="container page-hero-content">
+        <div class="animate-fade-up">
+          <div class="badge mb-6"><i class="ph-fill ph-cpu"></i> PCI PTS-certified hardware</div>
+          <h1 class="mb-6">Hardware built for <br><span class="text-accent">performance</span></h1>
+          <p class="lead">From pocket-sized mobile readers to full kitchen display systems, every device ships
+            pre-configured, encrypted end-to-end and ready to take payments the day it arrives.</p>
+          <div class="page-hero-actions">
+            <a href="#products" class="btn btn-primary">Browse hardware</a>
+            <a href="#compatibility" class="btn btn-outline">Use my own device</a>
+          </div>
+          <div class="page-hero-trust">
+            <span><i class="ph-fill ph-truck"></i> Free 2-day shipping</span>
+            <span><i class="ph-fill ph-shield-check"></i> Lifetime warranty on leases</span>
+            <span><i class="ph-fill ph-plug"></i> Plug-and-play setup</span>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Product Grid -->
-    <section>
+    <section id="products">
       <div class="container">
         <div class="grid grid-cols-3 gap-8 product-grid">
 
@@ -118,7 +133,7 @@
                   <span class="font-weight-bold-inline text-primary" style="font-size: 1.25rem;">$299</span>
                   <span class="text-muted font-size-caption">or $15/mo</span>
                 </div>
-                <a href="contact.html" class="btn btn-outline" style="padding: 0.5rem 1rem;">Add to Plan</a>
+                <a href="register.html" class="btn btn-primary">Add to Plan <i class="ph ph-plus"></i></a>
               </div>
             </div>
           </div>
@@ -143,7 +158,7 @@
                   <span class="font-weight-bold-inline text-primary" style="font-size: 1.25rem;">$49</span>
                   <span class="text-accent font-size-caption font-weight-label">Free with account</span>
                 </div>
-                <a href="contact.html" class="btn btn-outline" style="padding: 0.5rem 1rem;">Add to Plan</a>
+                <a href="register.html" class="btn btn-primary">Add to Plan <i class="ph ph-plus"></i></a>
               </div>
             </div>
           </div>
@@ -168,7 +183,7 @@
                   <span class="font-weight-bold-inline text-primary" style="font-size: 1.25rem;">$899</span>
                   <span class="text-muted font-size-caption">or $45/mo</span>
                 </div>
-                <a href="contact.html" class="btn btn-outline" style="padding: 0.5rem 1rem;">Add to Plan</a>
+                <a href="register.html" class="btn btn-primary">Add to Plan <i class="ph ph-plus"></i></a>
               </div>
             </div>
           </div>
@@ -194,7 +209,7 @@
                   <span class="font-weight-bold-inline text-primary" style="font-size: 1.25rem;">$199</span>
                   <span class="text-muted font-size-caption">or $10/mo</span>
                 </div>
-                <a href="contact.html" class="btn btn-outline" style="padding: 0.5rem 1rem;">Add to Plan</a>
+                <a href="register.html" class="btn btn-primary">Add to Plan <i class="ph ph-plus"></i></a>
               </div>
             </div>
           </div>
@@ -219,7 +234,7 @@
                   <span class="font-weight-bold-inline text-primary" style="font-size: 1.25rem;">$0</span>
                   <span class="text-accent font-size-caption font-weight-label">Free Software</span>
                 </div>
-                <a href="contact.html" class="btn btn-outline" style="padding: 0.5rem 1rem;">Add to Plan</a>
+                <a href="register.html" class="btn btn-primary">Add to Plan <i class="ph ph-plus"></i></a>
               </div>
             </div>
           </div>
@@ -246,7 +261,7 @@
                   <span class="font-weight-bold-inline text-primary" style="font-size: 1.25rem;">$1,499</span>
                   <span class="text-muted font-size-caption">or $75/mo</span>
                 </div>
-                <a href="contact.html" class="btn btn-outline" style="padding: 0.5rem 1rem;">Add to Plan</a>
+                <a href="register.html" class="btn btn-primary">Add to Plan <i class="ph ph-plus"></i></a>
               </div>
             </div>
           </div>
@@ -270,25 +285,110 @@
       </div>
     </section>
 
-    <!-- Compatibility Note -->
-    <section class="bg-primary text-center">
-      <div class="container" style="max-width: 800px;">
-        <h2 class="mb-4">Bring your own device</h2>
-        <p class="lead mx-auto mb-8">Already invested in expensive POS hardware? PayNexa is agnostic and compatible with
-          over 90% of terminals, gateways, and software providers on the market.</p>
-
-        <div class="card bg-secondary" style="border: none;">
-          <h4 class="mb-4">Compatible Gateway Networks</h4>
-          <div class="flex justify-center gap-4 flex-wrap text-muted gateway-list">
-            <span class="font-weight-bold-inline text-uppercase gateway-chip">Authorize.Net</span>
-            <span class="font-weight-bold-inline text-uppercase gateway-chip">NMI</span>
-            <span class="font-weight-bold-inline text-uppercase gateway-chip">USAePay</span>
-            <span class="font-weight-bold-inline text-uppercase gateway-chip">Clover</span>
-            <span class="font-weight-bold-inline text-uppercase gateway-chip">PAX</span>
+    <!-- Why PayNexa hardware -->
+    <section class="bg-tertiary">
+      <div class="container">
+        <div class="section-header animate-fade-up">
+          <span class="eyebrow">Why our hardware</span>
+          <h2>Every device, ready on day one</h2>
+          <p class="lead">No setup fees, no technician visits. Unbox it, power it on and start accepting cards.</p>
+        </div>
+        <div class="grid grid-cols-3 gap-6">
+          <div class="card icon-card animate-fade-up">
+            <div class="feature-icon"><i class="ph ph-package"></i></div>
+            <h4 class="mb-2">Pre-configured &amp; shipped free</h4>
+            <p>Devices arrive programmed with your merchant ID, tax rates and tipping preferences. Free 2-day shipping
+              on every order.</p>
           </div>
-          <hr style="border: none; border-top: 1px solid var(--border-color); margin: var(--space-6) 0;">
-          <p class="mb-4">Don't see your system listed? Contact our integrations team to verify compatibility.</p>
-          <a href="contact.html" class="btn btn-outline">Check Compatibility</a>
+          <div class="card icon-card animate-fade-up delay-100">
+            <div class="feature-icon"><i class="ph ph-lock-key"></i></div>
+            <h4 class="mb-2">End-to-end encryption</h4>
+            <p>Card data is encrypted at the point of swipe, dip or tap, which shrinks your PCI scope to a short
+              self-assessment questionnaire.</p>
+          </div>
+          <div class="card icon-card animate-fade-up delay-200">
+            <div class="feature-icon"><i class="ph ph-arrows-clockwise"></i></div>
+            <h4 class="mb-2">Overnight swap guarantee</h4>
+            <p>If a leased device fails, we ship a replacement the same day so you are never left without a way to get
+              paid.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Compatibility -->
+    <section id="compatibility" class="bg-primary">
+      <div class="container" style="max-width: 1000px;">
+        <div class="section-header animate-fade-up">
+          <span class="eyebrow">Bring your own device</span>
+          <h2>Compatible gateway networks</h2>
+          <p class="lead">Already invested in POS hardware? PayNexa works with over 90% of the terminals, gateways and
+            software providers on the market, so you can switch processors without replacing a thing.</p>
+        </div>
+
+        <div class="gateway-grid animate-fade-up">
+          <div class="gateway-logo">
+            <img src="assets/images/gateways/authorize-net.svg" alt="Authorize.Net logo" loading="lazy">
+            <span class="gateway-name">Authorize.Net</span>
+            <span class="gateway-type">Payment gateway</span>
+          </div>
+          <div class="gateway-logo">
+            <img src="assets/images/gateways/nmi.svg" alt="NMI logo" loading="lazy">
+            <span class="gateway-name">NMI</span>
+            <span class="gateway-type">Payment gateway</span>
+          </div>
+          <div class="gateway-logo">
+            <img src="assets/images/gateways/usaepay.svg" alt="USAePay logo" loading="lazy">
+            <span class="gateway-name">USAePay</span>
+            <span class="gateway-type">Payment gateway</span>
+          </div>
+          <div class="gateway-logo">
+            <img src="assets/images/gateways/fiserv.svg" alt="Fiserv logo" loading="lazy">
+            <span class="gateway-name">Fiserv</span>
+            <span class="gateway-type">Processing network</span>
+          </div>
+          <div class="gateway-logo">
+            <img src="assets/images/gateways/clover.svg" alt="Clover logo" loading="lazy">
+            <span class="gateway-name">Clover</span>
+            <span class="gateway-type">POS terminals</span>
+          </div>
+          <div class="gateway-logo">
+            <img src="assets/images/gateways/pax.svg" alt="PAX logo" loading="lazy">
+            <span class="gateway-name">PAX</span>
+            <span class="gateway-type">POS terminals</span>
+          </div>
+          <div class="gateway-logo">
+            <img src="assets/images/gateways/ingenico.svg" alt="Ingenico logo" loading="lazy">
+            <span class="gateway-name">Ingenico</span>
+            <span class="gateway-type">POS terminals</span>
+          </div>
+          <div class="gateway-logo">
+            <img src="assets/images/gateways/verifone.svg" alt="Verifone logo" loading="lazy">
+            <span class="gateway-name">Verifone</span>
+            <span class="gateway-type">POS terminals</span>
+          </div>
+        </div>
+
+        <div class="text-center mt-12 animate-fade-up">
+          <p class="text-secondary mb-6">Don't see your system listed? Our integrations team will verify compatibility
+            within one business day.</p>
+          <a href="contact.html" class="btn btn-primary">Check compatibility <i class="ph ph-arrow-right"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-panel animate-fade-up">
+          <div class="badge mb-6">Hardware bundles</div>
+          <h2 class="mb-4">Not sure which device fits your counter?</h2>
+          <p class="lead mb-8 mx-auto" style="max-width: 40rem;">Tell us how you take payments and a specialist will
+            recommend a setup, with leasing options from $10/mo.</p>
+          <div class="flex justify-center gap-4 flex-wrap">
+            <a href="register.html" class="btn btn-primary">Get started <i class="ph ph-arrow-right"></i></a>
+            <a href="contact.html" class="btn btn-outline">Talk to a hardware specialist</a>
+          </div>
         </div>
       </div>
     </section>
@@ -323,6 +423,7 @@
         <div class="footer-col">
           <h4>Company</h4>
           <div class="footer-links">
+            <a href="about.html" class="footer-link">About Us</a>
             <a href="pricing.html" class="footer-link">Pricing</a>
             <a href="equipment.html" class="footer-link">Equipment</a>
             <a href="contact.html" class="footer-link">Contact</a>

@@ -538,6 +538,70 @@
         padding: var(--space-4) !important;
       }
     }
+
+    /* Welcome banner */
+    .welcome-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-6);
+      flex-wrap: wrap;
+      padding: var(--space-6) 2rem;
+      border-radius: 20px;
+      background: var(--gradient-accent);
+      color: #fff;
+      box-shadow: 0 12px 30px rgba(var(--accent-rgb), 0.25);
+    }
+
+    .welcome-banner h2 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      margin: 0 0 6px;
+      color: #fff;
+    }
+
+    .welcome-banner p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .welcome-banner .welcome-date {
+      font-size: var(--size-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .welcome-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .welcome-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #fff;
+      color: var(--accent-hover);
+      border: 1px solid #fff;
+      transition: transform 0.2s;
+    }
+
+    .welcome-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .welcome-btn.ghost {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.5);
+    }
   </style>
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
 </head>
@@ -604,6 +668,20 @@
 
         <!-- ================= OVERVIEW ================= -->
         <div id="overview" class="dashboard-section active">
+          <!-- Welcome Banner -->
+          <div class="welcome-banner mb-8">
+            <div>
+              <p class="welcome-date" id="welcomeDate"></p>
+              <h2><span id="welcomeGreeting">Welcome back</span>, Sarah 👋</h2>
+              <p>Sales are up 8.4% on yesterday. Your next payout of <strong>$11,982.40</strong> lands in your bank
+                account tomorrow morning.</p>
+            </div>
+            <div class="welcome-actions">
+              <a class="welcome-btn" data-goto="reports"><i class="ph ph-chart-line-up"></i> View Reports</a>
+              <a class="welcome-btn ghost" data-goto="settlements"><i class="ph ph-arrows-left-right"></i> Payouts</a>
+            </div>
+          </div>
+
           <!-- KPI Cards -->
           <div class="grid grid-cols-4 gap-6 mb-8">
             <div class="card kpi-card">
@@ -1094,6 +1172,21 @@
   <!-- Scripts -->
   <script src="assets/js/main.js"></script>
   <script src="assets/js/dashboard.js"></script>
+  <script>
+    const now = new Date();
+    const hour = now.getHours();
+    document.getElementById('welcomeGreeting').textContent =
+      hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+    document.getElementById('welcomeDate').textContent =
+      now.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+
+    document.querySelectorAll('[data-goto]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const link = document.querySelector(`.sidebar-nav .sidebar-link[data-target="${btn.dataset.goto}"]`);
+        if (link) link.click();
+      });
+    });
+  </script>
 </body>
 
 </html>
